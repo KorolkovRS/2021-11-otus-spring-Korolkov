@@ -4,14 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!--    <bean id="personDao" class="ru.otus.spring.dao.PersonDaoSimple">-->
-<!--    </bean>-->
-
-<!--    <bean id="personService" class="ru.otus.spring.service.PersonServiceImpl">-->
-<!--        <constructor-arg name="dao" ref="personDao"/>-->
-<!--    </bean>-->
-
-   <bean id="questionDao" class="ru.korolkovrs.spring.dao.QuestionDaoImpl">
+   <bean id="resourceDiscoverService" class="ru.korolkovrs.spring.service.ResourceDiscoverServiceImpl">
+      <constructor-arg name="fileName" value="csv/questions.csv"></constructor-arg>
    </bean>
 
+   <bean id="questionDao" class="ru.korolkovrs.spring.dao.QuestionDaoImpl">
+      <constructor-arg name="resourceDiscoverService" ref="resourceDiscoverService"></constructor-arg>
+   </bean>
+
+   <bean id="questionController" class="ru.korolkovrs.spring.controller.QuestionControllerImpl">
+      <constructor-arg name="dao" ref="questionDao"></constructor-arg>
+   </bean>
 </beans>
