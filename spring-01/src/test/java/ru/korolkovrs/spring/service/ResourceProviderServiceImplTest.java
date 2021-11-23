@@ -3,6 +3,7 @@ package ru.korolkovrs.spring.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.io.Reader;
 
 import static org.assertj.core.api.Assertions.*;
@@ -15,9 +16,13 @@ public class ResourceProviderServiceImplTest {
     @Test
     void shouldProvideAccessToResource() {
         ResourceProviderServiceImpl resourceProviderService = new ResourceProviderServiceImpl("csv/questions.csv");
-        assertThat(resourceProviderService.getResourceReader())
-                .isNotNull()
-                .isInstanceOf(Reader.class);
+        try (Reader reader = resourceProviderService.getResourceReader()) {
+            assertThat(reader)
+                    .isNotNull()
+                    .isInstanceOf(Reader.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @DisplayName("Throws an error if the file is not in the resources")
@@ -25,6 +30,10 @@ public class ResourceProviderServiceImplTest {
     void shouldThrowsExceptionIfFileNotFound() {
         ResourceProviderServiceImpl resourceProviderService = new ResourceProviderServiceImpl("csv/incorrect_name.csv");
         assertThrows(RuntimeException.class,
-                () -> resourceProviderService.getResourceReader());
+                () -> {
+                    Reader reader = resourceProviderService.getResourceReader();
+                    reader.close();
+                });
+
     }
 }
