@@ -1,11 +1,9 @@
 package ru.korolkovrs.spring.dao;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ru.korolkovrs.spring.domain.Question;
-import ru.korolkovrs.spring.service.ResourceDiscoverService;
-import ru.korolkovrs.spring.service.ResourceDiscoverServiceImpl;
+import ru.korolkovrs.spring.service.ResourceProviderService;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -13,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class QuestionDaoImpl implements QuestionDao {
-    private final ResourceDiscoverService resourceDiscoverService;
+    private final ResourceProviderService resourceDiscoverService;
 
     @Override
     public List<Question> getAll() {

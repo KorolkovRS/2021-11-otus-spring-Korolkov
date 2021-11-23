@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RequiredArgsConstructor
-public class ResourceDiscoverServiceImpl implements ResourceDiscoverService {
+public class ResourceProviderServiceImpl implements ResourceProviderService {
     private final String fileName;
 
     @Override

@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-   <bean id="resourceDiscoverService" class="ru.korolkovrs.spring.service.ResourceDiscoverServiceImpl">
+   <bean id="resourceDiscoverService" class="ru.korolkovrs.spring.service.ResourceProviderServiceImpl">
       <constructor-arg name="fileName" value="csv/questions.csv"></constructor-arg>
    </bean>
 
