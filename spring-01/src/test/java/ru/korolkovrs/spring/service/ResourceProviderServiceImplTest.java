@@ -34,6 +34,5 @@ public class ResourceProviderServiceImplTest {
                     Reader reader = resourceProviderService.getResourceReader();
                     reader.close();
                 });
-
     }
 }
