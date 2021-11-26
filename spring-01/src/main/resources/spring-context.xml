@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <bean id="resourceProvider" class="ru.korolkovrs.spring.provider.ResourceProviderImpl">
+      <constructor-arg name="fileName" value="csv/questions.csv"></constructor-arg>
+   </bean>
+
+   <bean id="questionDao" class="ru.korolkovrs.spring.dao.QuestionDaoImpl">
+      <constructor-arg name="resourceProvider" ref="resourceProvider"></constructor-arg>
+   </bean>
+
+   <bean id="questionService" class="ru.korolkovrs.spring.service.QuestionServiceImpl">
+      <constructor-arg name="dao" ref="questionDao"></constructor-arg>
+      <constructor-arg name="converter" ref="questionToStringConverter"></constructor-arg>
+   </bean>
+
+   <bean id="questionToStringConverter" class="ru.korolkovrs.spring.converter.QuestionToStringConverter"></bean>
+</beans>
