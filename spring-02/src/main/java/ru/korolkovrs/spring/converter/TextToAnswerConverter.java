@@ -12,8 +12,11 @@ public class TextToAnswerConverter extends AbstractCsvConverter {
         answer.setName(strings[0]);
         if (strings[1].equals("1")) {
             answer.setCorrect(true);
-        } else {
+        } else if (strings[1].equals("0")) {
             answer.setCorrect(false);
+        }
+        else {
+            throw new IllegalArgumentException("Сsv file parsing error. Check the line: " + s);
         }
         return answer;
     }

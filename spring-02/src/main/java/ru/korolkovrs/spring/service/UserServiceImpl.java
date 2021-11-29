@@ -14,10 +14,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser() {
         User user = new User();
-        ioService.print("Enter your name:");
-        user.setName(ioService.get());
-        ioService.print("Enter your surname:");
-        user.setSurname(ioService.get());
+        ioService.out("Enter your name:");
+        user.setName(ioService.input());
+        ioService.out("Enter your surname:");
+        user.setSurname(ioService.input());
         return user;
     }
 }

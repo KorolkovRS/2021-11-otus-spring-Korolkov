@@ -23,7 +23,7 @@ public class TestServiceImpl implements TestService {
         int score = 0;
 
         for(Question question: questions) {
-            ioService.print(converter.convert(question));
+            ioService.out(converter.convert(question));
             int answer;
             while (true) {
                 answer = checkUserAnswer(question);
@@ -35,19 +35,19 @@ public class TestServiceImpl implements TestService {
                 score++;
             }
         }
-        ioService.print(String.format("User: %s %s\nScore: %d", user.getName(), user.getSurname(), score));
+        ioService.out(String.format("User: %s %s\nScore: %d", user.getName(), user.getSurname(), score));
     }
 
     private int checkUserAnswer(Question q) {
         try {
-            ioService.print("Enter the correct answer from 1 to " + q.getAnswers().size());
-            int answer = Integer.valueOf(ioService.get());
+            ioService.out("Enter the correct answer from 1 to " + q.getAnswers().size());
+            int answer = Integer.valueOf(ioService.input());
             if (answer > 0 && answer <= q.getAnswers().size()) {
                 return answer - 1;
             }
             throw new RuntimeException();
         } catch (RuntimeException e) {
-            ioService.print("Incorrect answer format");
+            ioService.out("Incorrect answer format");
             return -1;
         }
     }

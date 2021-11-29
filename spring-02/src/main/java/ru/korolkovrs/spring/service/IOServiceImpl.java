@@ -2,9 +2,8 @@ package ru.korolkovrs.spring.service;
 
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
-import java.util.Scanner;
 import javax.annotation.PreDestroy;
+import java.util.Scanner;
 
 @Service
 public class IOServiceImpl implements IOService {
@@ -15,12 +14,12 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-    public String get() {
+    public String input() {
         return scanner.next();
     }
 
     @Override
-    public void print(String s) {
+    public void out(String s) {
         System.out.println(s);
     }
 
