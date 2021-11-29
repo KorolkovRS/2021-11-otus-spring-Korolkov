@@ -1,0 +1,23 @@
+package ru.korolkovrs.spring.service;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.korolkovrs.spring.domain.User;
+
+@Service
+@RequiredArgsConstructor
+@Data
+public class UserServiceImpl implements UserService {
+    private final IOService ioService;
+
+    @Override
+    public User getUser() {
+        User user = new User();
+        ioService.print("Enter your name:");
+        user.setName(ioService.get());
+        ioService.print("Enter your surname:");
+        user.setSurname(ioService.get());
+        return user;
+    }
+}
