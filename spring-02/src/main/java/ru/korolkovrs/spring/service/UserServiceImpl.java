@@ -7,7 +7,6 @@ import ru.korolkovrs.spring.domain.User;
 
 @Service
 @RequiredArgsConstructor
-@Data
 public class UserServiceImpl implements UserService {
     private final IOService ioService;
 

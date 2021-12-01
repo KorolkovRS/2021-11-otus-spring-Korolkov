@@ -1,8 +1,8 @@
 package ru.korolkovrs.spring.provider;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.korolkovrs.spring.exception.QuestionLoadingException;
 
 import java.io.InputStream;
 
@@ -19,7 +19,7 @@ public class ResourceProviderImpl implements ResourceProvider {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream is = classLoader.getResourceAsStream(fileName);
         if (is == null) {
-            throw new RuntimeException("File not found! " + fileName);
+            throw new QuestionLoadingException("File not found! " + fileName);
         }
         return is;
     }

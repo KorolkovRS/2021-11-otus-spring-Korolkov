@@ -24,13 +24,7 @@ public class TestServiceImpl implements TestService {
 
         for(Question question: questions) {
             ioService.out(converter.convert(question));
-            int answer;
-            while (true) {
-                answer = checkUserAnswer(question);
-                if (answer != -1) {
-                    break;
-                }
-            }
+            int answer = waitCorrectInputAndGet(question);
             if (question.getAnswers().get(answer).isCorrect()) {
                 score++;
             }
@@ -38,10 +32,18 @@ public class TestServiceImpl implements TestService {
         ioService.out(String.format("User: %s %s\nScore: %d", user.getName(), user.getSurname(), score));
     }
 
+    private int waitCorrectInputAndGet(Question q) {
+        int answer;
+        do {
+            answer = checkUserAnswer(q);
+        } while (answer == -1);
+        return answer;
+    }
+
     private int checkUserAnswer(Question q) {
         try {
             ioService.out("Enter the correct answer from 1 to " + q.getAnswers().size());
-            int answer = Integer.valueOf(ioService.input());
+            int answer = Integer.parseInt(ioService.input());
             if (answer > 0 && answer <= q.getAnswers().size()) {
                 return answer - 1;
             }

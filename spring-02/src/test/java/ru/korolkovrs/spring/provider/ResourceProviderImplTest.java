@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("ResourceProviderServiceImpl")
@@ -28,11 +29,18 @@ public class ResourceProviderImplTest {
     @DisplayName("Throws an error if the file is not in the resources")
     @Test
     void shouldThrowsExceptionIfFileNotFound() {
-        ResourceProviderImpl resourceProviderService =  new ResourceProviderImpl("csv/incorrect_name.csv");
+        ResourceProviderImpl resourceProviderService = new ResourceProviderImpl("csv/incorrect_name.csv");
         assertThrows(RuntimeException.class,
                 () -> {
                     InputStream is = resourceProviderService.getResourceStream();
                     is.close();
                 });
+    }
+
+    @DisplayName("The resource passed by the method is closed correctly")
+    @Test
+    void shouldReturnClosedResource() {
+        ResourceProviderImpl resourceProviderService = new ResourceProviderImpl("csv/questions.csv");
+        assertDoesNotThrow(() -> resourceProviderService.getResourceStream().close());
     }
 }

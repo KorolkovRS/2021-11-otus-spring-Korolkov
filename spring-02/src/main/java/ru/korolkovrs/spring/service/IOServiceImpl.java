@@ -1,16 +1,20 @@
 package ru.korolkovrs.spring.service;
 
 import org.springframework.stereotype.Service;
+import ru.korolkovrs.spring.factory.InputStreamFactory;
+import ru.korolkovrs.spring.factory.OutputStreamFactory;
 
-import javax.annotation.PreDestroy;
+import java.io.*;
 import java.util.Scanner;
 
 @Service
 public class IOServiceImpl implements IOService {
     private final Scanner scanner;
+    private final PrintStream printStream;
 
-    public IOServiceImpl() {
-        scanner = new Scanner(System.in);
+    public IOServiceImpl(OutputStreamFactory outputStreamFactory, InputStreamFactory inputStreamFactory) {
+        scanner = new Scanner(inputStreamFactory.getInputStream());
+        printStream = new PrintStream(outputStreamFactory.getOutputStream());
     }
 
     @Override
@@ -20,11 +24,6 @@ public class IOServiceImpl implements IOService {
 
     @Override
     public void out(String s) {
-        System.out.println(s);
-    }
-
-    @PreDestroy
-    public void closeResource() {
-        scanner.close();
+        printStream.println(s);
     }
 }
