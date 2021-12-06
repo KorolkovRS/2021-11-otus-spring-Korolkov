@@ -1,25 +1,24 @@
 package ru.korolkovrs.spring.provider;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.korolkovrs.spring.exception.QuestionLoadingException;
+import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
 
 import java.io.InputStream;
+import java.util.Locale;
 
 @Component
+@RequiredArgsConstructor
 public class ResourceProviderImpl implements ResourceProvider {
-    private final String fileName;
-
-    public ResourceProviderImpl(@Value("${fileName}") String fileName) {
-        this.fileName = fileName;
-    }
+    private final ResourcePathResolver pathResolver;
 
     @Override
-    public InputStream getResourceStream() {
+    public InputStream getResourceStream(Locale locale) {
         ClassLoader classLoader = getClass().getClassLoader();
-        InputStream is = classLoader.getResourceAsStream(fileName);
+        InputStream is = classLoader.getResourceAsStream(pathResolver.getResourcePath(locale));
         if (is == null) {
-            throw new QuestionLoadingException("File not found! " + fileName);
+            throw new QuestionLoadingException("File not found! " + pathResolver.getResourcePath(locale));
         }
         return is;
     }

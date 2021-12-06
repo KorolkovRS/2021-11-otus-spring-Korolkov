@@ -1,1 +1,8 @@
-fileName: questions.csv
+spring:
+  messages:
+    basename: i18n/messages
+
+codes:
+  codes:
+    ru: ru_questions.csv
+    en: questions.csv

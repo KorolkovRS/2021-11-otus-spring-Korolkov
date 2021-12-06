@@ -1,10 +1,12 @@
 package ru.korolkovrs.spring.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.i18n.LocaleContext;
 import org.springframework.stereotype.Service;
 import ru.korolkovrs.spring.converter.QuestionToStringConverter;
 import ru.korolkovrs.spring.domain.Question;
 import ru.korolkovrs.spring.domain.User;
+import ru.korolkovrs.spring.i18n_util.Internalizer;
 
 import java.util.List;
 
@@ -15,11 +17,14 @@ public class TestServiceImpl implements TestService {
     private final QuestionService questionService;
     private final IOService ioService;
     private final QuestionToStringConverter converter;
+    private final Internalizer internalizer;
+    private final LocaleContext localeContext;
+
 
     @Override
     public void test() {
         User user = userService.getUser();
-        List<Question> questions = questionService.getAll();
+        List<Question> questions = questionService.getAllWithLocale(localeContext.getLocale());
         int score = 0;
 
         for (Question question : questions) {
@@ -29,7 +34,7 @@ public class TestServiceImpl implements TestService {
                 score++;
             }
         }
-        ioService.out(String.format("User: %s %s\nScore: %d", user.getName(), user.getSurname(), score));
+        ioService.out(String.format(internalizer.internalizeMessage("testService.test_result"), user.getName(), user.getSurname(), score));
     }
 
     private int waitCorrectInputAndGet(Question q) {
@@ -42,14 +47,14 @@ public class TestServiceImpl implements TestService {
 
     private int checkUserAnswer(Question q) {
         try {
-            ioService.out("Enter the correct answer from 1 to " + q.getAnswers().size());
+            ioService.out(internalizer.internalizeMessage("testService.enter_answer") + q.getAnswers().size());
             int answer = Integer.parseInt(ioService.input());
             if (answer > 0 && answer <= q.getAnswers().size()) {
                 return answer - 1;
             }
             throw new RuntimeException();
         } catch (RuntimeException e) {
-            ioService.out("Incorrect answer format");
+            ioService.out(internalizer.internalizeMessage("testService.incorrect_format"));
             return -1;
         }
     }
