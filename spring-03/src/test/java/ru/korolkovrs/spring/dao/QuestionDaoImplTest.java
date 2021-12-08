@@ -1,5 +1,7 @@
 package ru.korolkovrs.spring.dao;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,27 +33,35 @@ class QuestionDaoImplTest {
     @Mock
     private ResourceProvider resourceProvider = mock(ResourceProvider.class);
 
+    private InputStream is;
+
+    @BeforeEach
+    void initData() {
+        is = getClass().getClassLoader().getResourceAsStream("test_questions.csv");
+    }
+
+    @AfterEach
+    void closeResources() throws IOException {
+        is.close();
+    }
+
     @Test
     @DisplayName("Should return a list of questions")
-    void shouldReturnListOfQuestions() throws IOException {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("test_questions.csv");
+    void shouldReturnListOfQuestions() {
         given(resourceProvider.getResourceStream(any())).willReturn(is);
         List<Question> questions = questionDao.getAllWithLocale(Locale.ENGLISH);
         assertThat(questions)
                 .isNotEmpty()
                 .hasSize(5);
-        is.close();
     }
 
     @Test
     @DisplayName("Must request a data stream from the resource from the ResourceProvider")
-    void shouldRequestInputStream() throws IOException {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("test_questions.csv");
+    void shouldRequestInputStream() {
         Locale locale = new Locale("ru", "RU");
         given(resourceProvider.getResourceStream(locale)).willReturn(is);
         questionDao.getAllWithLocale(locale);
         verify(resourceProvider, times(1)).getResourceStream(locale);
-        is.close();
     }
 }
 

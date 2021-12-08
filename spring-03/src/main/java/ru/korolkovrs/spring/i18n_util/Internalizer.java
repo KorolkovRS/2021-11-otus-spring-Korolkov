@@ -10,15 +10,14 @@ import java.util.ResourceBundle;
 public class Internalizer {
     private final LocaleContext localeContext;
 
-    private final String badeName;
+    private final String baseName;
 
-    public Internalizer(LocaleContext localeContext, @Value("${spring.messages.basename}")String badeName) {
+    public Internalizer(LocaleContext localeContext, @Value("${spring.messages.basename}")String baseName) {
         this.localeContext = localeContext;
-        this.badeName = badeName;
+        this.baseName = baseName;
     }
 
     public String internalizeMessage(String s) {
-        return ResourceBundle.getBundle(badeName, localeContext.getLocale()).getString(s);
+        return ResourceBundle.getBundle(baseName, localeContext.getLocale()).getString(s);
     }
 }
-

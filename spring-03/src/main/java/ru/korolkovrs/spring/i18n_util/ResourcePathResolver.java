@@ -10,7 +10,6 @@ import java.util.Map;
 
 @Component
 @ConfigurationProperties(prefix = "codes")
-
 public class ResourcePathResolver {
     private Map<String, String> codes = new HashMap<>();
 
@@ -23,4 +22,5 @@ public class ResourcePathResolver {
     public void setCodes(Map<String, String> codes) {
         this.codes = codes;
     }
+
 }
