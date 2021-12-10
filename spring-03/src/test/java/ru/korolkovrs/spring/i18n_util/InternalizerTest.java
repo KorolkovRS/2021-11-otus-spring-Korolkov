@@ -2,7 +2,11 @@ package ru.korolkovrs.spring.i18n_util;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 
@@ -11,33 +15,47 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Internalizer")
+@ExtendWith(MockitoExtension.class)
+
 class InternalizerTest {
     @Mock
     private SystemLocaleResolver localeResolver = mock(SystemLocaleResolver.class);
 
-    private Internalizer internalizer = new Internalizer(localeResolver, "i18n_test/messages");
+    @Mock
+    private MessageSource messageSource = mock(MessageSource.class);
+
+    @InjectMocks
+    private Internalizer internalizer;
 
     @Test
     @DisplayName("Should request a locale from LocaleContext")
     void shouldRequestLocal() {
         given(localeResolver.getLocale()).willReturn(new Locale("en", "EN"));
-        internalizer.internalizeMessage("internalizer.string");
+        internalizer.internalizeMessage("message");
+
         verify(localeResolver, times(1)).getLocale();
     }
 
     @Test
-    @DisplayName("Should request a locale from LocaleContext")
-    void shouldIntenalizeMesasge() {
-        given(localeResolver.getLocale()).willReturn(new Locale("en", "EN"));
-        internalizer.internalizeMessage("internalizer.string");
-        assertEquals(internalizer.internalizeMessage("internalizer.string"), "english");
+    @DisplayName("Should request a message from messageSource")
+    void shouldRequestMessage() {
+        String message = "message";
+        Locale locale = new Locale("en", "EN");
+        given(localeResolver.getLocale()).willReturn(locale);
+        internalizer.internalizeMessage(message);
+
+        verify(messageSource, times(1)).getMessage(eq(message), any(), eq(locale));
     }
 
     @Test
-    @DisplayName("If there is no resource with the required locale, use the default setting")
-    void shouldInternalizeDefault() {
-        given(localeResolver.getLocale()).willReturn(new Locale("de", "DE"));
-        internalizer.internalizeMessage("internalizer.string");
-        assertEquals(internalizer.internalizeMessage("internalizer.string"), "default");
+    void shouldReturnCorrectMessage() {
+        String message = "message";
+        String internationalizeMessage = "english message";
+        Locale locale = new Locale("en", "EN");
+
+        given(localeResolver.getLocale()).willReturn(locale);
+        given(messageSource.getMessage(anyString(), any(), eq(locale))).willReturn(internationalizeMessage);
+
+        assertEquals(internalizer.internalizeMessage(message), internationalizeMessage);
     }
 }

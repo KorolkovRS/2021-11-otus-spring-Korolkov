@@ -14,9 +14,7 @@ import ru.korolkovrs.spring.provider.ResourceProvider;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Locale;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,8 +46,8 @@ class QuestionDaoImplTest {
     @Test
     @DisplayName("Should return a list of questions")
     void shouldReturnListOfQuestions() {
-        given(resourceProvider.getResourceStream(any())).willReturn(is);
-        List<Question> questions = questionDao.getAllWithLocale(Locale.ENGLISH);
+        given(resourceProvider.getResourceStream()).willReturn(is);
+        List<Question> questions = questionDao.getAll();
         assertThat(questions)
                 .isNotEmpty()
                 .hasSize(5);
@@ -58,10 +56,9 @@ class QuestionDaoImplTest {
     @Test
     @DisplayName("Must request a data stream from the resource from the ResourceProvider")
     void shouldRequestInputStream() {
-        Locale locale = new Locale("ru", "RU");
-        given(resourceProvider.getResourceStream(locale)).willReturn(is);
-        questionDao.getAllWithLocale(locale);
-        verify(resourceProvider, times(1)).getResourceStream(locale);
+        given(resourceProvider.getResourceStream()).willReturn(is);
+        questionDao.getAll();
+        verify(resourceProvider, times(1)).getResourceStream();
     }
 }
 

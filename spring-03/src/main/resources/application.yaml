@@ -2,7 +2,11 @@ spring:
   messages:
     basename: i18n/messages
 
-codes:
+locale-manager:
   codes:
     ru: ru_questions.csv
     en: questions.csv
+
+localeResolver:
+  language: en
+  country: EN

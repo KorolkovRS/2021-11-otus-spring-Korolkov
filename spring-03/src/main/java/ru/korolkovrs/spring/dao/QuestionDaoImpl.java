@@ -21,9 +21,9 @@ public class QuestionDaoImpl implements QuestionDao {
     private final ResourceProvider resourceProvider;
 
     @Override
-    public List<Question> getAllWithLocale(Locale locale) {
+    public List<Question> getAll() {
         List<Question> beans;
-        try (Reader in = new InputStreamReader(resourceProvider.getResourceStream(locale))) {
+        try (Reader in = new InputStreamReader(resourceProvider.getResourceStream())) {
             beans = new CsvToBeanBuilder<Question>(in)
                     .withSeparator(';')
                     .withType(Question.class)

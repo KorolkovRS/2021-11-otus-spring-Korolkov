@@ -5,9 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import ru.korolkovrs.spring.service.TestService;
 
-import java.util.Locale;
-
-
 @SpringBootApplication
 public class Spring03Application {
     public static void main(String[] args) {

@@ -14,10 +14,8 @@ import ru.korolkovrs.spring.service.QuestionServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
 
@@ -44,13 +42,13 @@ public class QuestionServiceImplTest {
         questions.add(new Question(1, "One", answers1));
         questions.add(new Question(2, "Two", answers2));
 
-        given(questionDao.getAllWithLocale(any())).willReturn(questions);
+        given(questionDao.getAll()).willReturn(questions);
     }
 
     @Test
     @DisplayName("getAll() Returns the list of questions correctly")
     void shouldReturnQuestionListCorrect() {
-        assertEquals(questions, questionService.getAllWithLocale(Locale.CANADA));
+        assertEquals(questions, questionService.getAll());
     }
 }
 

@@ -6,7 +6,6 @@ import ru.korolkovrs.spring.exception.QuestionLoadingException;
 import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
 
 import java.io.InputStream;
-import java.util.Locale;
 
 @Component
 @RequiredArgsConstructor
@@ -14,11 +13,11 @@ public class ResourceProviderImpl implements ResourceProvider {
     private final ResourcePathResolver pathResolver;
 
     @Override
-    public InputStream getResourceStream(Locale locale) {
+    public InputStream getResourceStream() {
         ClassLoader classLoader = getClass().getClassLoader();
-        InputStream is = classLoader.getResourceAsStream(pathResolver.getResourcePath(locale));
+        InputStream is = classLoader.getResourceAsStream(pathResolver.getResourcePath());
         if (is == null) {
-            throw new QuestionLoadingException("File not found! " + pathResolver.getResourcePath(locale));
+            throw new QuestionLoadingException("File not found! " + pathResolver.getResourcePath());
         }
         return is;
     }

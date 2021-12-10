@@ -10,12 +10,10 @@ import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -31,9 +29,9 @@ public class ResourceProviderImplTest {
     @DisplayName("Opens the file from the resource correctly")
     @Test
     void shouldProvideAccessToResource() {
-        given(pathResolver.getResourcePath(Locale.ENGLISH)).willReturn("questions.csv");
+        given(pathResolver.getResourcePath()).willReturn("questions.csv");
 
-        try (InputStream is = resourceProvider.getResourceStream(Locale.ENGLISH)) {
+        try (InputStream is = resourceProvider.getResourceStream()) {
             assertThat(is)
                     .isNotNull()
                     .isInstanceOf(InputStream.class);
@@ -45,11 +43,11 @@ public class ResourceProviderImplTest {
     @DisplayName("Throws an error if the file is not in the resources")
     @Test
     void shouldThrowsExceptionIfFileNotFound() {
-        given(pathResolver.getResourcePath(Locale.ENGLISH)).willReturn("incorrect_name.csv");
+        given(pathResolver.getResourcePath()).willReturn("incorrect_name.csv");
 
         assertThrows(RuntimeException.class,
                 () -> {
-                    InputStream is = resourceProvider.getResourceStream(Locale.ENGLISH);
+                    InputStream is = resourceProvider.getResourceStream();
                     is.close();
                 });
     }
@@ -57,16 +55,16 @@ public class ResourceProviderImplTest {
     @DisplayName("The resource passed by the method is closed correctly")
     @Test
     void shouldReturnClosedResource() {
-        given(pathResolver.getResourcePath(Locale.ENGLISH)).willReturn("questions.csv");
-        assertDoesNotThrow(() -> resourceProvider.getResourceStream(Locale.ENGLISH).close());
+        given(pathResolver.getResourcePath()).willReturn("questions.csv");
+        assertDoesNotThrow(() -> resourceProvider.getResourceStream().close());
     }
 
     @DisplayName("Must request the path to resources from ResourcePathResolver")
     @Test
     void shouldRequestResourcePath() {
-        given(pathResolver.getResourcePath(Locale.ENGLISH)).willReturn("questions.csv");
-        resourceProvider.getResourceStream(Locale.ENGLISH);
-        verify(pathResolver, times(1)).getResourcePath(any());
+        given(pathResolver.getResourcePath()).willReturn("questions.csv");
+        resourceProvider.getResourceStream();
+        verify(pathResolver, times(1)).getResourcePath();
     }
 }
 

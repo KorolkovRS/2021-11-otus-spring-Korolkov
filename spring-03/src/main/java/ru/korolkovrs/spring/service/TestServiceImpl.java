@@ -1,7 +1,6 @@
 package ru.korolkovrs.spring.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.i18n.LocaleContext;
 import org.springframework.stereotype.Service;
 import ru.korolkovrs.spring.converter.QuestionToStringConverter;
 import ru.korolkovrs.spring.domain.Question;
@@ -18,13 +17,12 @@ public class TestServiceImpl implements TestService {
     private final IOService ioService;
     private final QuestionToStringConverter converter;
     private final Internalizer internalizer;
-    private final LocaleContext localeContext;
 
 
     @Override
     public void test() {
         User user = userService.getUser();
-        List<Question> questions = questionService.getAllWithLocale(localeContext.getLocale());
+        List<Question> questions = questionService.getAll();
         int score = 0;
 
         for (Question question : questions) {

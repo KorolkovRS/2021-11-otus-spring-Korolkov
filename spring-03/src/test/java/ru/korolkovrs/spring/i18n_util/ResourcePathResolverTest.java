@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,8 +32,8 @@ class ResourcePathResolverTest {
     @DisplayName("Should return the path to the file with questions according to the locale")
     void shouldReturnCorrectPathToCSV() {
         assertAll(
-                () -> assertEquals(pathResolver.getResourcePath(new Locale("ru", "RU")), codes.get("ru")),
-                () -> assertNotEquals(pathResolver.getResourcePath(new Locale("ru", "RU")), codes.get("en"))
+                () -> assertEquals(pathResolver.getResourcePath(), codes.get("ru")),
+                () -> assertNotEquals(pathResolver.getResourcePath(), codes.get("en"))
         );
     }
 }
