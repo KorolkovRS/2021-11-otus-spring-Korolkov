@@ -23,7 +23,7 @@ public class IOServiceImpl implements IOService {
     }
 
     @Override
-    public void out(String s) {
-        printStream.println(s);
+    public void out(String s, Object... args) {
+        printStream.println(String.format(s, args));
     }
 }
