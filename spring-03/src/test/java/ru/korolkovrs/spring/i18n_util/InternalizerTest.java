@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InternalizerTest {
     @Mock
-    private SystemLocaleResolver localeResolver = mock(SystemLocaleResolver.class);
+    private PropertiesFileLocaleResolver localeResolver = mock(PropertiesFileLocaleResolver.class);
 
     @Mock
     private MessageSource messageSource = mock(MessageSource.class);

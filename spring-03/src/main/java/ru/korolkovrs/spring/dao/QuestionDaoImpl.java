@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.korolkovrs.spring.domain.Question;
 import ru.korolkovrs.spring.exception.QuestionLoadingException;
-import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
 import ru.korolkovrs.spring.provider.ResourceProvider;
 
 import java.io.IOException;
@@ -13,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 @Repository
 @RequiredArgsConstructor

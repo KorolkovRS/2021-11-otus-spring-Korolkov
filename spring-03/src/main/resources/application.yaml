@@ -8,5 +8,5 @@ locale-manager:
     en: questions.csv
 
 localeResolver:
-  language: en
-  country: EN
+  language: ru
+  country: RU

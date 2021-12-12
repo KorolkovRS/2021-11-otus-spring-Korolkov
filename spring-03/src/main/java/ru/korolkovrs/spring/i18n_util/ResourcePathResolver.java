@@ -29,4 +29,11 @@ public class ResourcePathResolver {
         this.codes = codes;
     }
 
+    public Map<String, String> getCodes() {
+        return codes;
+    }
+
+    public static Locale getDefaultLocale() {
+        return DEFAULT_LOCALE;
+    }
 }

@@ -29,7 +29,7 @@ public class ResourceProviderImplTest {
     @DisplayName("Opens the file from the resource correctly")
     @Test
     void shouldProvideAccessToResource() {
-        given(pathResolver.getResourcePath()).willReturn("questions.csv");
+        given(pathResolver.getResourcePath()).willReturn("ru_test_questions.csv");
 
         try (InputStream is = resourceProvider.getResourceStream()) {
             assertThat(is)
@@ -55,14 +55,14 @@ public class ResourceProviderImplTest {
     @DisplayName("The resource passed by the method is closed correctly")
     @Test
     void shouldReturnClosedResource() {
-        given(pathResolver.getResourcePath()).willReturn("questions.csv");
+        given(pathResolver.getResourcePath()).willReturn("ru_test_questions.csv");
         assertDoesNotThrow(() -> resourceProvider.getResourceStream().close());
     }
 
     @DisplayName("Must request the path to resources from ResourcePathResolver")
     @Test
     void shouldRequestResourcePath() {
-        given(pathResolver.getResourcePath()).willReturn("questions.csv");
+        given(pathResolver.getResourcePath()).willReturn("ru_test_questions.csv");
         resourceProvider.getResourceStream();
         verify(pathResolver, times(1)).getResourcePath();
     }
