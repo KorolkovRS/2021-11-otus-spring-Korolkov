@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Internalizer")
 @ExtendWith(MockitoExtension.class)
-
 class InternalizerTest {
     @Mock
     private PropertiesFileLocaleResolver localeResolver = mock(PropertiesFileLocaleResolver.class);
