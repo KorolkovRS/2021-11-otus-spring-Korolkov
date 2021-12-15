@@ -17,14 +17,14 @@ import static org.mockito.BDDMockito.given;
 
 @DisplayName("ResourcePathResolver")
 @ExtendWith(MockitoExtension.class)
-class ResourcePathResolverTest {
+class PropertiesFileResourcePathResolverTest {
     private Map<String, String> codes;
 
     @Mock
     private PropertiesFileLocaleResolver localeContext = mock(PropertiesFileLocaleResolver.class);
 
     @InjectMocks
-    private ResourcePathResolver pathResolver;
+    private PropertiesFileResourcePathResolver pathResolver;
 
     @BeforeEach
     void init() {
@@ -57,7 +57,7 @@ class ResourcePathResolverTest {
     @DisplayName("If the locale is not in properties, return the default path to the file")
     void shouldReturnDefaultPath() {
         given(localeContext.getLocale()).willReturn(new Locale("de", "DE"));
-        assertEquals(pathResolver.getResourcePath(), codes.get(ResourcePathResolver.getDefaultLocale().getLanguage()));
+        assertEquals(pathResolver.getResourcePath(), codes.get(pathResolver.getDefaultLocale().getLanguage()));
     }
 
     @Test

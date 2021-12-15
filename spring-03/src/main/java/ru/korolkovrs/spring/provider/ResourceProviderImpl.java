@@ -3,14 +3,14 @@ package ru.korolkovrs.spring.provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.korolkovrs.spring.exception.QuestionLoadingException;
-import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
+import ru.korolkovrs.spring.i18n_util.PropertiesFileResourcePathResolver;
 
 import java.io.InputStream;
 
 @Component
 @RequiredArgsConstructor
 public class ResourceProviderImpl implements ResourceProvider {
-    private final ResourcePathResolver pathResolver;
+    private final PropertiesFileResourcePathResolver pathResolver;
 
     @Override
     public InputStream getResourceStream() {

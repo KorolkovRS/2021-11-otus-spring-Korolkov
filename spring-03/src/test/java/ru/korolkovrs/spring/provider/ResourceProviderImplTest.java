@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
+import ru.korolkovrs.spring.i18n_util.PropertiesFileResourcePathResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ public class ResourceProviderImplTest {
     private ResourceProviderImpl resourceProvider;
 
     @Mock
-    private ResourcePathResolver pathResolver;
+    private PropertiesFileResourcePathResolver pathResolver;
 
     @DisplayName("Opens the file from the resource correctly")
     @Test
