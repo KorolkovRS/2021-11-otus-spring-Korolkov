@@ -15,9 +15,7 @@ public class LanguageChooseServiceImpl implements LanguageChooseService {
     public void choose() {
         List<Language> languages = languageService.getLanguages();
         ioService.outWithInternalize("applicationEventsCommand.available_languages");
-        languages.stream().forEach((l) -> {
-            ioService.out("-" + l.getLanguageCode());
-        });
+        languages.stream().forEach((l) -> ioService.out("-" + l.getLanguageCode()));
         ioService.outWithInternalize("applicationEventsCommand.choose_language");
         String languageCode = ioService.input();
         Language language = new Language(languageCode);
