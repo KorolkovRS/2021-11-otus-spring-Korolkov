@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.i18n.LocaleContext;
 
 import java.util.*;
 
@@ -17,20 +18,29 @@ import static org.mockito.BDDMockito.given;
 @DisplayName("Internalizer test with context")
 public class InternalizerSpringBootTest {
     @MockBean
-    private PropertiesFileLocaleResolver localeResolver;
+    private LocaleContext localeContext;
 
     @Autowired
     private Internalizer internalizer;
 
     @Test
-    @DisplayName("Возвращает интернализированое значение строки в соответствии с локалью")
-    void shouldReturnCorrectMessage() {
-        String message = "internalizer.string";
-        String internationalizeMessage = "english";
-        Locale locale = new Locale("en");
+    @DisplayName("Возвращает интернализированое значение строки на английском")
+    void shouldReturnCorrectEnglishMessage() {
+        given(localeContext.getLocale()).willReturn(new Locale("en"));
+        assertEquals(internalizer.internalizeMessage("internalizer.string"), "english");
+    }
 
-        given(localeResolver.getLocale()).willReturn(locale);
+    @Test
+    @DisplayName("Возвращает интернализированое значение строки на французком")
+    void shouldReturnCorrectFranceMessage() {
+        given(localeContext.getLocale()).willReturn(new Locale("fr"));
+        assertEquals(internalizer.internalizeMessage("internalizer.string"), "france");
+    }
 
-        assertEquals(internalizer.internalizeMessage(message), internationalizeMessage);
+    @Test
+    @DisplayName("Возвращает дефолтное значение строки")
+    void shouldReturnCorrectDefaultMessage() {
+        given(localeContext.getLocale()).willReturn(new Locale("de"));
+        assertEquals(internalizer.internalizeMessage("internalizer.string"), "default");
     }
 }

@@ -22,10 +22,7 @@ class UserServiceImplTest {
     private final static String SURNAME = "Ivanov";
 
     @Mock
-    private IOServiceImpl ioService;
-
-    @Mock
-    private Internalizer internalizer;
+    private IOInternatiolizeService ioService = mock(IOInternatiolizeServiceImpl.class);
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -35,7 +32,6 @@ class UserServiceImplTest {
         when(ioService.input())
                 .thenReturn(NAME)
                 .thenReturn(SURNAME);
-        given(internalizer.internalizeMessage(anyString())).willReturn("test string");
     }
 
     @Test
@@ -52,9 +48,6 @@ class UserServiceImplTest {
     @DisplayName("Should request the first and last name in an internalized form")
     void ShouldRequestNameAndSurname() {
         userService.getUser();
-        assertAll(
-                () -> verify(ioService, times(2)).out("test string"),
-                () -> verify(internalizer, times(2)).internalizeMessage(any())
-        );
+        verify(ioService, times(2)).outWithInternalize(anyString());
     }
 }

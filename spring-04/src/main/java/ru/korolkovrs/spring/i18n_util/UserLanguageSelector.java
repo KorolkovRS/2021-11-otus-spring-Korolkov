@@ -1,5 +1,6 @@
 package ru.korolkovrs.spring.i18n_util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import ru.korolkovrs.spring.domain.Language;
@@ -13,7 +14,11 @@ public class UserLanguageSelector implements LanguageSelector {
     private List<Language> languages = new ArrayList<>();
     private Language currentLanguage;
 
-    private static final Language DEFAULT_LANGUAGE = new Language("en");
+    private final Language defaultLanguage;
+
+    public UserLanguageSelector(@Value("${locale-resolver.default-language}") String defaultLanguageCode) {
+        this.defaultLanguage = new Language(defaultLanguageCode);
+    }
 
     public void setLanguages(List<Language> languages) {
         this.languages = languages;
@@ -26,7 +31,7 @@ public class UserLanguageSelector implements LanguageSelector {
 
     @Override
     public Language getCurrentLanguage() {
-        return currentLanguage != null ? currentLanguage: DEFAULT_LANGUAGE;
+        return currentLanguage != null ? currentLanguage: defaultLanguage;
     }
 
     @Override

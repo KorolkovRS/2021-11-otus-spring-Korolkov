@@ -10,7 +10,6 @@ locale-manager:
     en: questions.csv
 
 locale-resolver:
-  default-language:
-    en
+  default-language: en
   languages[0]: ru
   languages[1]: en

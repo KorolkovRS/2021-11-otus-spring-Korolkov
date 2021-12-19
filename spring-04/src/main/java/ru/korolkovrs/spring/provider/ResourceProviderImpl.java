@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.korolkovrs.spring.exception.QuestionLoadingException;
 import ru.korolkovrs.spring.i18n_util.PropertiesFileResourcePathResolver;
+import ru.korolkovrs.spring.i18n_util.ResourcePathResolver;
 
 import java.io.InputStream;
 
 @Component
 @RequiredArgsConstructor
 public class ResourceProviderImpl implements ResourceProvider {
-    private final PropertiesFileResourcePathResolver pathResolver;
+    private final ResourcePathResolver pathResolver;
 
     @Override
     public InputStream getResourceStream() {

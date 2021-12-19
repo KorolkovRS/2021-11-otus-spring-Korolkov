@@ -19,15 +19,13 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 class PropertiesFileResourcePathResolverTest {
     private Map<String, String> codes;
-
+    private PropertiesFileResourcePathResolver pathResolver;
     @Mock
     private PropertiesFileLocaleResolver localeContext = mock(PropertiesFileLocaleResolver.class);
 
-    @InjectMocks
-    private PropertiesFileResourcePathResolver pathResolver;
-
     @BeforeEach
     void init() {
+        pathResolver = new PropertiesFileResourcePathResolver(localeContext, "en");
             codes = Map.of(
                 "en", "test_questions.csv",
                 "ru", "ru_test_questions.csv"

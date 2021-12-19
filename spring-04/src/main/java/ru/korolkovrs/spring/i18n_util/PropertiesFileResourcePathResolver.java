@@ -1,5 +1,6 @@
 package ru.korolkovrs.spring.i18n_util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.stereotype.Component;
@@ -12,18 +13,18 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "locale-manager")
 public class PropertiesFileResourcePathResolver implements ResourcePathResolver{
     private final LocaleContext localeContext;
-
+    private final Locale defaultLocale;
     private Map<String, String> codes = new HashMap<>();
 
-    public PropertiesFileResourcePathResolver(LocaleContext localeContext) {
+    public PropertiesFileResourcePathResolver(LocaleContext localeContext,
+                                              @Value("${locale-resolver.default-language}") String defaultLanguageCode) {
         this.localeContext = localeContext;
+        this.defaultLocale = new Locale(defaultLanguageCode);
     }
-
-    private final static Locale DEFAULT_LOCALE = new Locale("en");
 
     @Override
     public String getResourcePath() {
-        return codes.getOrDefault(localeContext.getLocale().getLanguage(), codes.get(DEFAULT_LOCALE.getLanguage()));
+        return codes.getOrDefault(localeContext.getLocale().getLanguage(), codes.get(defaultLocale.getLanguage()));
     }
 
     public void setCodes(Map<String, String> codes) {
@@ -35,6 +36,6 @@ public class PropertiesFileResourcePathResolver implements ResourcePathResolver{
     }
 
     public Locale getDefaultLocale() {
-        return DEFAULT_LOCALE;
+        return defaultLocale;
     }
 }
