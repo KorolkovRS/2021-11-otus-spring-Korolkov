@@ -1,0 +1,15 @@
+spring:
+  messages:
+    basename: i18n/messages
+  main:
+    allow-circular-references: true
+
+locale-manager:
+  codes:
+    ru: ru_questions.csv
+    en: questions.csv
+
+locale-resolver:
+  default-language: en
+  languages[0]: ru
+  languages[1]: en
