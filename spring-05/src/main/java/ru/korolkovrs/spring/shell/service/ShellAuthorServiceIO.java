@@ -22,7 +22,7 @@ public class ShellAuthorServiceIO implements ShellAuthorService {
     @Override
     public void getAuthorById() {
         ioService.out("Введите id автора:");
-        Integer id = Integer.valueOf(ioService.input());
+        Long id = Long.valueOf(ioService.input());
         Author author = authorService.getById(id);
         ioService.out(converter.convert(author));
     }

@@ -16,8 +16,8 @@ public class GenreDaoJdbc implements GenreDao {
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
 
     @Override
-    public Genre getById(Integer id) {
-        Map<String, Integer> params = Collections.singletonMap("id", id);
+    public Genre getById(Long id) {
+        Map<String, Long> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.queryForObject("SELECT genre_id, genre_name FROM genre WHERE genre_id = :id", params, new GenreMapper());
     }
 

@@ -5,7 +5,7 @@ import ru.korolkovrs.spring.domain.Genre;
 import java.util.List;
 
 public interface GenreDao {
-    Genre getById(Integer id);
+    Genre getById(Long id);
 
     List<Genre> getAll();
 

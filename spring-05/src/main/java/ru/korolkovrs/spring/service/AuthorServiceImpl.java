@@ -13,7 +13,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorDao authorDao;
 
     @Override
-    public Author getById(Integer id) {
+    public Author getById(Long id) {
         return authorDao.getById(id);
     }
 

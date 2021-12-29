@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class BookDaoJdbcTest {
     private static final Long EXISTING_BOOK_ID_1 = 1L;
     private static final String EXISTING_TITLE_1 = "Война и мир";
-    private static final Author EXISTING_AUTHOR_1 = new Author(1, "Л.Н. Толстой");
-    private static final Genre EXISTING_GENRE_1 = new Genre(1, "Русская классика");
+    private static final Author EXISTING_AUTHOR_1 = new Author(1L, "Л.Н. Толстой");
+    private static final Genre EXISTING_GENRE_1 = new Genre(1L, "Русская классика");
     private static final Long EXISTING_BOOK_ID_2 = 2L;
     private static final String EXISTING_TITLE_2 = "Хроники Амбера";
-    private static final Author EXISTING_AUTHOR_2 = new Author(2, "Роджер Желязны");
-    private static final Genre EXISTING_GENRE_2 = new Genre(2, "Фантастика");
+    private static final Author EXISTING_AUTHOR_2 = new Author(2L, "Роджер Желязны");
+    private static final Genre EXISTING_GENRE_2 = new Genre(2L, "Фантастика");
 
     @Autowired
     private BookDaoJdbc bookDao;

@@ -25,11 +25,11 @@ class BookServiceImplTest {
     private BookServiceImpl bookService;
 
     @Mock
-    private BookDaoJdbc dao = mock(BookDaoJdbc.class);
+    private BookDaoJdbc dao;
 
-    private static final Author EXIST_AUTHOR_1 = new Author(1, "Герберт Уэллс");
-    private static final Genre EXIST_GENRE_1 = new Genre(1, "Фантастика");
-    private static final Author EXIST_AUTHOR_2 = new Author(2, "Гарри Гаррисон");
+    private static final Author EXIST_AUTHOR_1 = new Author(1L, "Герберт Уэллс");
+    private static final Genre EXIST_GENRE_1 = new Genre(1L, "Фантастика");
+    private static final Author EXIST_AUTHOR_2 = new Author(2L, "Гарри Гаррисон");
 
     @Test
     @DisplayName("Должен делегировать запрос на сохранение книги дао")

@@ -17,7 +17,7 @@ public class ShellGenreServiceIO implements ShellGenreService {
     @Override
     public void getGenreById() {
         ioService.out("Введите id жанра:");
-        Integer id = Integer.valueOf(ioService.input());
+        Long id = Long.valueOf(ioService.input());
         Genre genre = genreService.getById(id);
         ioService.out(converter.convert(genre));
     }

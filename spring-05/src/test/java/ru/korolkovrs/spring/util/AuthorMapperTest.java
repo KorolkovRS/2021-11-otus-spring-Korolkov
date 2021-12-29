@@ -18,17 +18,17 @@ import static org.mockito.Mockito.*;
 @DisplayName("Author mapper")
 class AuthorMapperTest {
     @Mock
-    ResultSet rs = mock(ResultSet.class);
+    private ResultSet rs = mock(ResultSet.class);
 
     @Test
     @DisplayName("Должен собирать автора из resultSet")
     void shouldMapResultSetToAuthor() throws SQLException {
-        given(rs.getInt("author_id")).willReturn(1);
+        given(rs.getLong("author_id")).willReturn(1L);
         given(rs.getString("name")).willReturn("Author");
 
         AuthorMapper authorMapper = new AuthorMapper();
         Author author = authorMapper.mapRow(rs, 2);
-        Author correctAuthor = new Author(1, "Author");
+        Author correctAuthor = new Author(1L, "Author");
         assertEquals(author, correctAuthor);
     }
 }

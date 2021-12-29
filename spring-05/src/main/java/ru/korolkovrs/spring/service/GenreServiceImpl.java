@@ -13,7 +13,7 @@ public class GenreServiceImpl implements GenreService {
     private final GenreDao genreDao;
 
     @Override
-    public Genre getById(Integer id) {
+    public Genre getById(Long id) {
         return genreDao.getById(id);
     }
 

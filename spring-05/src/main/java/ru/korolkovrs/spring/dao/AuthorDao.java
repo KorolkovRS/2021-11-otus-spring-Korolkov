@@ -5,7 +5,7 @@ import ru.korolkovrs.spring.domain.Author;
 import java.util.List;
 
 public interface AuthorDao {
-    Author getById(Integer id);
+    Author getById(Long id);
 
     Author getByName(String name);
 

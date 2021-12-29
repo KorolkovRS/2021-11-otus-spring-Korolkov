@@ -16,9 +16,9 @@ import static org.assertj.core.api.Assertions.*;
 @JdbcTest
 @Import(AuthorDaoJdbc.class)
 class AuthorDaoJdbcTest {
-    private static final Integer EXISTING_AUTHOR_ID_1 = 1;
+    private static final Long EXISTING_AUTHOR_ID_1 = 1L;
     private static final String EXISTING_AUTHOR_NAME_1 = "Л.Н. Толстой";
-    private static final Integer EXISTING_AUTHOR_ID_2 = 2;
+    private static final Long EXISTING_AUTHOR_ID_2 = 2L;
     private static final String EXISTING_AUTHOR_NAME_2 = "Роджер Желязны";
 
     @Autowired
@@ -46,7 +46,7 @@ class AuthorDaoJdbcTest {
         Author newAuthor = new Author();
         newAuthor.setName("Станислав Лем");
         authorDao.save(newAuthor);
-        Author author = authorDao.getById(3);
+        Author author = authorDao.getById(3L);
         assertThat(author.getName()).isEqualTo(newAuthor.getName());
     }
 

@@ -78,7 +78,7 @@ public class ShellBookServiceIO implements ShellBookService {
     private Author getAuthorByConsole() {
         ioService.out("Выберете id автора книги:");
         shellAuthorService.getAllAuthor();
-        Integer authorId = Integer.valueOf(ioService.input());
+        Long authorId = Long.valueOf(ioService.input());
         return authorService.getById(authorId);
     }
 
@@ -86,7 +86,7 @@ public class ShellBookServiceIO implements ShellBookService {
         ioService.out("Выберете id жанра книги:");
         shellGenreService.getAllGenre();
 
-        Integer genreId = Integer.valueOf(ioService.input());
+        Long genreId = Long.valueOf(ioService.input());
         return genreService.getById(genreId);
     }
 }
