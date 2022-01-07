@@ -2,6 +2,7 @@ package ru.korolkovrs.spring06.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.korolkovrs.spring06.dao.AuthorRepository;
 import ru.korolkovrs.spring06.domain.Author;
 
@@ -33,7 +34,11 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     @Override
     public List<Author> findAll() {
-        TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a", Author.class);
+        TypedQuery<Author> query = entityManager.createQuery(
+                "SELECT a FROM Author a " +
+                        "ORDER BY a.id",
+                Author.class
+        );
         return query.getResultList();
     }
 

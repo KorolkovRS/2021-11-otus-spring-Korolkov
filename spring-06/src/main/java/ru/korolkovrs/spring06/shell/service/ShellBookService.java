@@ -5,6 +5,8 @@ public interface ShellBookService {
 
     void getBookById();
 
+    void getBookByTitle();
+
     void saveBook();
 
     void updateBook();

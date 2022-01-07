@@ -3,15 +3,18 @@ package ru.korolkovrs.spring06.dao;
 import ru.korolkovrs.spring06.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository {
-    void save(Book book);
+    Book save(Book book);
 
-    Book getById(Long id);
+    Optional<Book> findById(Long id);
 
-    List<Book> getAll();
+    List<Book> findByTitle(String title);
 
-    void update(Book book);
+    List<Book> findByAuthorName(String authorName);
 
-    void deleteById(Long id);
+    List<Book> findAll();
+
+    void delete(Book book);
 }

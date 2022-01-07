@@ -1,15 +1,22 @@
-package ru.korolkovrs.spring06.shell.service;
+package ru.korolkovrs.spring06.shell.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.korolkovrs.spring06.converter.BookToStringConverter;
+import ru.korolkovrs.spring06.converter.CommentToStringConverter;
 import ru.korolkovrs.spring06.domain.Author;
 import ru.korolkovrs.spring06.domain.Book;
+import ru.korolkovrs.spring06.domain.Comment;
 import ru.korolkovrs.spring06.domain.Genre;
 import ru.korolkovrs.spring06.service.AuthorService;
 import ru.korolkovrs.spring06.service.BookService;
 import ru.korolkovrs.spring06.service.GenreService;
 import ru.korolkovrs.spring06.service.IOService;
+import ru.korolkovrs.spring06.shell.service.ShellAuthorService;
+import ru.korolkovrs.spring06.shell.service.ShellBookService;
+import ru.korolkovrs.spring06.shell.service.ShellGenreService;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,19 +27,41 @@ public class ShellBookServiceIO implements ShellBookService {
     private final AuthorService authorService;
     private final ShellGenreService shellGenreService;
     private final GenreService genreService;
-    private final BookToStringConverter converter;
+    private final BookToStringConverter bookConverter;
+    private final CommentToStringConverter commentConverter;
+
+    private final static String ACCEPT_ANSWER = "y";
 
     @Override
     public void getAllBook() {
-        bookService.getAll().forEach((b) -> ioService.out(converter.convert(b)));
+        bookService.findAll().forEach((b) -> ioService.out(bookConverter.convert(b)));
     }
 
     @Override
     public void getBookById() {
         ioService.out("Введите id книги:");
         Long id = Long.valueOf(ioService.input());
-        Book book = bookService.getById(id);
-        ioService.out(converter.convert(book));
+        Book book = bookService.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(String.format("Книги с id=%d не найдено", id))
+        );
+        ioService.out(bookConverter.convert(book));
+        ioService.out("Показать комментарии к книге? Y/N:");
+        String answer = ioService.input().toLowerCase();
+        if (answer.equals(ACCEPT_ANSWER)) {
+            book.getComments().forEach((c) -> ioService.out(commentConverter.convert(c)));
+        }
+    }
+
+    @Override
+    public void getBookByTitle() {
+        ioService.out("Введите название книги:");
+        String title = ioService.input();
+        List<Book> books = bookService.findByTitle(title);
+        if (!books.isEmpty()) {
+            printBooks(books);
+        } else {
+            ioService.out(String.format("Книги не найдено"));
+        }
     }
 
     @Override
@@ -52,14 +81,14 @@ public class ShellBookServiceIO implements ShellBookService {
         book.setTitle(getBookNameByConsole());
         book.setAuthor(getAuthorByConsole());
         book.setGenre(getGenreByConsole());
-        bookService.update(book);
+        bookService.save(book);
         ioService.out("Книга успешно обновлена");
     }
 
     @Override
     public void delete() {
-        ioService.out("Ведите id книги, которую хотите удалить:");
         getAllBook();
+        ioService.out("Ведите id книги, которую хотите удалить:");
         Long id = Long.valueOf(ioService.input());
         bookService.deleteById(id);
         ioService.out("Книга успешно удалена");
@@ -91,5 +120,9 @@ public class ShellBookServiceIO implements ShellBookService {
         return genreService.findById(genreId).orElseThrow(
                 () -> new IllegalArgumentException(String.format("Жанр с id=%d отсутсвует", genreId))
         );
+    }
+
+    private void printBooks(List<Book> books) {
+        books.forEach((b) -> ioService.out(bookConverter.convert(b)));
     }
 }

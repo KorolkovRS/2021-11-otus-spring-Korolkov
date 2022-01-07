@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring06.shell.service;
+package ru.korolkovrs.spring06.shell.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import ru.korolkovrs.spring06.converter.GenreToStringConverter;
 import ru.korolkovrs.spring06.domain.Genre;
 import ru.korolkovrs.spring06.service.GenreService;
 import ru.korolkovrs.spring06.service.IOService;
+import ru.korolkovrs.spring06.shell.service.ShellGenreService;
 
 import java.util.List;
 

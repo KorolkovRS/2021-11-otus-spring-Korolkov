@@ -3,15 +3,16 @@ package ru.korolkovrs.spring06.service;
 import ru.korolkovrs.spring06.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
     void save(Book book);
 
-    Book getById(Long id);
+    Optional<Book> findById(Long id);
 
-    List<Book> getAll();
+    List<Book> findByTitle(String title);
 
-    void update(Book book);
+    List<Book> findAll();
 
     void deleteById(Long id);
 }

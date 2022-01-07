@@ -3,9 +3,14 @@ package ru.korolkovrs.spring06.shell;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import ru.korolkovrs.spring06.domain.Author;
+import ru.korolkovrs.spring06.domain.Book;
 import ru.korolkovrs.spring06.shell.service.ShellAuthorService;
 import ru.korolkovrs.spring06.shell.service.ShellBookService;
+import ru.korolkovrs.spring06.shell.service.ShellCommentService;
 import ru.korolkovrs.spring06.shell.service.ShellGenreService;
+
+import java.util.List;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -13,6 +18,7 @@ public class ApplicationEventCommands {
     private final ShellBookService shellBookService;
     private final ShellAuthorService shellAuthorService;
     private final ShellGenreService shellGenreService;
+    private final ShellCommentService shellCommentService;
 
     @ShellMethod(value = "get_all_book", key = {"get_all_book", "gab"})
     public void getAllBook() {
@@ -37,6 +43,11 @@ public class ApplicationEventCommands {
     @ShellMethod(value = "delete_book", key = {"delete_book", "db"})
     public void deleteBook() {
         shellBookService.delete();
+    }
+
+    @ShellMethod(value = "get_book_by_title", key = {"get_book_by_title", "gbt"})
+    public void getAuthorByTitle() {
+        shellBookService.getBookByTitle();
     }
 
     @ShellMethod(value = "get_all_author", key = {"get_all_author", "gaa"})
@@ -72,5 +83,20 @@ public class ApplicationEventCommands {
     @ShellMethod(value = "save_genre", key = {"save_genre", "sg"})
     public void saveGenre() {
         shellGenreService.saveGenre();
+    }
+
+    @ShellMethod(value = "add_comment", key = {"add_comment", "ac"})
+    public void addComment() {
+        shellCommentService.addComment();
+    }
+
+    @ShellMethod(value = "update_comment", key = {"update_comment", "uc"})
+    public void updateComment() {
+        shellCommentService.updateComment();
+    }
+
+    @ShellMethod(value = "delete_comment", key = {"delete_comment", "dc"})
+    public void deleteComment() {
+        shellCommentService.removeComment();
     }
 }

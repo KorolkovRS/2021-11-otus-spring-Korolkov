@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring06.shell.service;
+package ru.korolkovrs.spring06.shell.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import ru.korolkovrs.spring06.converter.AuthorToStringConverter;
 import ru.korolkovrs.spring06.domain.Author;
 import ru.korolkovrs.spring06.service.AuthorService;
 import ru.korolkovrs.spring06.service.IOService;
+import ru.korolkovrs.spring06.shell.service.ShellAuthorService;
 
 import java.util.List;
 import java.util.Optional;
