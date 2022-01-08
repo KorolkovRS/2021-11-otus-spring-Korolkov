@@ -6,7 +6,6 @@ import ru.korolkovrs.spring06.converter.BookToStringConverter;
 import ru.korolkovrs.spring06.converter.CommentToStringConverter;
 import ru.korolkovrs.spring06.domain.Author;
 import ru.korolkovrs.spring06.domain.Book;
-import ru.korolkovrs.spring06.domain.Comment;
 import ru.korolkovrs.spring06.domain.Genre;
 import ru.korolkovrs.spring06.service.AuthorService;
 import ru.korolkovrs.spring06.service.BookService;

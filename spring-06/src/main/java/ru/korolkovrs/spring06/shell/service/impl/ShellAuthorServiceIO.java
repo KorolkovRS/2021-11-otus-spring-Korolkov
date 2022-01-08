@@ -9,7 +9,6 @@ import ru.korolkovrs.spring06.service.IOService;
 import ru.korolkovrs.spring06.shell.service.ShellAuthorService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

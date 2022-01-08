@@ -53,7 +53,16 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<Book> findByAuthorName(String authorName) {
-        return null;
+        TypedQuery<Book> query = entityManager.createQuery(
+                "SELECT b FROM Book b " +
+                        "JOIN FETCH b.author " +
+                        "JOIN FETCH b.genre " +
+                        "WHERE LOWER(b.author.name) LIKE LOWER(:authorName) " +
+                        "ORDER BY b.id",
+                Book.class
+        );
+        query.setParameter("authorName", "%" + authorName + "%");
+        return query.getResultList();
     }
 
     @Override
@@ -73,6 +82,3 @@ public class BookRepositoryJpa implements BookRepository {
         entityManager.remove(book);
     }
 }
-
-//    @Query("SELECT m FROM Movie m WHERE m.title LIKE %:title%")
-//    List<Movie> searchByTitleLike(@Param("title") String title);

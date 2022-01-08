@@ -2,8 +2,6 @@ package ru.korolkovrs.spring06.shell.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring06.converter.BookToStringConverter;
 import ru.korolkovrs.spring06.domain.Book;
 import ru.korolkovrs.spring06.domain.Comment;
 import ru.korolkovrs.spring06.service.BookService;

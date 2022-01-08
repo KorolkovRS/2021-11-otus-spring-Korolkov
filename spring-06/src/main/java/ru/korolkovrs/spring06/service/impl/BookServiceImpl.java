@@ -35,6 +35,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Book> findByAuthorName(String authorName) {
+        return bookRepository.findByAuthorName(authorName);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Book> findAll() {
         return bookRepository.findAll();
     }

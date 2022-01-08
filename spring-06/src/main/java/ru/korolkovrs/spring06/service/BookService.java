@@ -1,5 +1,6 @@
 package ru.korolkovrs.spring06.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.korolkovrs.spring06.domain.Book;
 
 import java.util.List;
@@ -11,6 +12,9 @@ public interface BookService {
     Optional<Book> findById(Long id);
 
     List<Book> findByTitle(String title);
+
+    @Transactional(readOnly = true)
+    List<Book> findByAuthorName(String authorName);
 
     List<Book> findAll();
 

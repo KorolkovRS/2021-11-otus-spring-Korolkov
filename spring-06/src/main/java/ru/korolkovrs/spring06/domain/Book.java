@@ -35,4 +35,9 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     private List<Comment> comments;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

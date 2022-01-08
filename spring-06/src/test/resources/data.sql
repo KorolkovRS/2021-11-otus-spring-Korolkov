@@ -9,3 +9,9 @@ VALUES ('Русская классика'),
 INSERT INTO book(title, author_id, genre_id)
 VALUES ('Война и мир', 1, 1),
        ('Хроники Амбера', 2, 2);
+
+INSERT INTO comment(text, book_id)
+VALUES ('Описание природы', 1),
+       ('Затянуто', 1);
+
+

@@ -2,7 +2,6 @@ package ru.korolkovrs.spring06.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.korolkovrs.spring06.dao.AuthorRepository;
 import ru.korolkovrs.spring06.domain.Author;
 

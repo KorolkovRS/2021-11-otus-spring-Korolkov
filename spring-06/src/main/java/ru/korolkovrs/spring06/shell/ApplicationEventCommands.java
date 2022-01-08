@@ -3,14 +3,10 @@ package ru.korolkovrs.spring06.shell;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.korolkovrs.spring06.domain.Author;
-import ru.korolkovrs.spring06.domain.Book;
 import ru.korolkovrs.spring06.shell.service.ShellAuthorService;
 import ru.korolkovrs.spring06.shell.service.ShellBookService;
 import ru.korolkovrs.spring06.shell.service.ShellCommentService;
 import ru.korolkovrs.spring06.shell.service.ShellGenreService;
-
-import java.util.List;
 
 @ShellComponent
 @RequiredArgsConstructor
