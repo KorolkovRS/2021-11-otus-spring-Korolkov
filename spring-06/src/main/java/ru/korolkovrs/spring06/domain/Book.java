@@ -14,8 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@NamedEntityGraph(name = "book-comments-entity-graph",
-        attributeNodes = {@NamedAttributeNode("comments")})
+@NamedEntityGraph(name = "book-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("author"),
+                @NamedAttributeNode("genre"),
+                @NamedAttributeNode("comments")
+        })
 public class Book {
     @Id
     @Column(name = "book_id")
@@ -25,15 +29,16 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @OneToMany(mappedBy = "book")
+    @BatchSize(size = 5)
     private List<Comment> comments;
 
     @Override

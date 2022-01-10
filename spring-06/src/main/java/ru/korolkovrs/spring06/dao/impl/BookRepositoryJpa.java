@@ -7,6 +7,7 @@ import ru.korolkovrs.spring06.domain.Book;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -26,16 +27,9 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public Optional<Book> findById(Long id) {
-        EntityGraph<?> entityGraph = entityManager.createEntityGraph("book-comments-entity-graph");
-        TypedQuery<Book> query = entityManager.createQuery("SELECT b FROM Book b " +
-                        "JOIN FETCH b.author " +
-                        "JOIN FETCH b.genre " +
-                        "WHERE b.id = :id",
-                Book.class
-        );
-        query.setParameter("id", id);
-        query.setHint("javax.persistence.fetchgraph", entityGraph);
-        return Optional.ofNullable(query.getSingleResult());
+        EntityGraph<?> entityGraph = entityManager.createEntityGraph("book-entity-graph");
+        Map<String, Object> properties = Map.of("javax.persistence.fetchgraph", entityGraph);
+        return Optional.ofNullable(entityManager.find(Book.class, id, properties));
     }
 
     @Override
