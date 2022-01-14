@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring11.dao;
+package ru.korolkovrs.spring11.repository;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;

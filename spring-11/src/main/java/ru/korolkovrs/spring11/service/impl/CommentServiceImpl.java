@@ -3,7 +3,7 @@ package ru.korolkovrs.spring11.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring11.dao.CommentRepository;
+import ru.korolkovrs.spring11.repository.CommentRepository;
 import ru.korolkovrs.spring11.domain.Book;
 import ru.korolkovrs.spring11.domain.Comment;
 import ru.korolkovrs.spring11.service.CommentService;

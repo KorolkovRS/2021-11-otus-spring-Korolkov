@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring11.dao;
+package ru.korolkovrs.spring11.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.korolkovrs.spring11.domain.Genre;

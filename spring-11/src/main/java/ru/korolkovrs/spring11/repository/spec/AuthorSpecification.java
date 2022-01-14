@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring11.dao.spec;
+package ru.korolkovrs.spring11.repository.spec;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.data.jpa.domain.Specification;

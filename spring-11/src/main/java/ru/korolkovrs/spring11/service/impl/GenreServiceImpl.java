@@ -3,7 +3,7 @@ package ru.korolkovrs.spring11.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring11.dao.GenreRepository;
+import ru.korolkovrs.spring11.repository.GenreRepository;
 import ru.korolkovrs.spring11.domain.Genre;
 import ru.korolkovrs.spring11.service.GenreService;
 

@@ -1,10 +1,9 @@
 package ru.korolkovrs.spring11.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring11.dao.BookRepository;
+import ru.korolkovrs.spring11.repository.BookRepository;
 import ru.korolkovrs.spring11.domain.Author;
 import ru.korolkovrs.spring11.domain.Book;
 import ru.korolkovrs.spring11.service.BookService;

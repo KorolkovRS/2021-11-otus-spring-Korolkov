@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring11.dao.AuthorRepository;
+import ru.korolkovrs.spring11.repository.AuthorRepository;
 import ru.korolkovrs.spring11.domain.Author;
 import ru.korolkovrs.spring11.service.AuthorService;
 
 import java.util.List;
 import java.util.Optional;
 
-import static ru.korolkovrs.spring11.dao.spec.AuthorSpecification.*;
+import static ru.korolkovrs.spring11.repository.spec.AuthorSpecification.*;
 
 @Service
 @RequiredArgsConstructor
