@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      database: library
+
+  main:
+    allow-circular-references: true
+
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package: ru.korolkovrs.spring13.changelogs
+
