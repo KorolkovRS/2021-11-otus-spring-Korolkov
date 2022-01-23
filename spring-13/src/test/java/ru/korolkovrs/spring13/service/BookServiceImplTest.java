@@ -79,7 +79,7 @@ class BookServiceImplTest {
         Book book = new Book("1", "Война Миров", EXIST_AUTHOR_1, EXIST_GENRE_1);
         List<Book> books = List.of(book);
 
-        given(repository.findAllByAuthor(book.getAuthor())).willReturn(books);
+        given(repository.findAllByAuthorId(book.getAuthor().getId())).willReturn(books);
 
         assertThat(bookService.findByAuthor(book.getAuthor())).usingRecursiveComparison().isEqualTo(books);
     }

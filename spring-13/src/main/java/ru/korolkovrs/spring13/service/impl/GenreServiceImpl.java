@@ -2,8 +2,11 @@ package ru.korolkovrs.spring13.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.korolkovrs.spring13.domain.Book;
 import ru.korolkovrs.spring13.repository.GenreRepository;
 import ru.korolkovrs.spring13.domain.Genre;
+import ru.korolkovrs.spring13.service.BookService;
 import ru.korolkovrs.spring13.service.GenreService;
 
 import java.util.List;
@@ -13,10 +16,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
+    private final BookService bookService;
 
     @Override
     public Optional<Genre> findById(String id) {
-        genreRepository.findById(id);
         return genreRepository.findById(id);
     }
 
@@ -26,7 +29,17 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @Transactional
     public Genre save(Genre genre) {
-        return genreRepository.save(genre);
+        if (genre.getId() == null) {
+            return genreRepository.save(genre);
+        }
+        List<Book> books = bookService.findByGenre(genre);
+        genreRepository.save(genre);
+        books.forEach(book -> {
+            book.setGenre(genre);
+            bookService.save(book);
+        });
+        return genre;
     }
 }

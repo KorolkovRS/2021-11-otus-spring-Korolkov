@@ -3,6 +3,7 @@ package ru.korolkovrs.spring13.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.korolkovrs.spring13.domain.Genre;
 import ru.korolkovrs.spring13.repository.BookRepository;
 import ru.korolkovrs.spring13.domain.Author;
 import ru.korolkovrs.spring13.domain.Book;
@@ -19,8 +20,8 @@ public class BookServiceImpl implements BookService {
     private final CommentService commentService;
 
     @Override
-    public void save(Book book) {
-        bookRepository.save(book);
+    public Book save(Book book) {
+        return bookRepository.save(book);
     }
 
     @Override
@@ -35,7 +36,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByAuthor(Author author) {
-        return bookRepository.findAllByAuthor(author);
+        return bookRepository.findAllByAuthorId(author.getId());
+    }
+
+    @Override
+    public List<Book> findByGenre(Genre genre) {
+        return bookRepository.findAllByGenreId(genre.getId());
     }
 
     @Override
@@ -47,7 +53,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void deleteById(String id) {
         Book book = bookRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException(String.format("Книги с id=%d не найдено", id))
+                () -> new IllegalArgumentException(String.format("Книги с id=%s не найдено", id))
         );
         bookRepository.delete(book);
         commentService.deleteByBook(book);

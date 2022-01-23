@@ -31,14 +31,14 @@ class BookRepositoryTest {
     @Test
     @DisplayName("Должен найти книгну по Автору")
     void shouldFindBookByAuthorName() {
-        Author author1 = new Author("Станислав Лем");
-        Author author2 = new Author("Братья Стругацкие");
+        Author author1 = new Author("1","Станислав Лем");
+        Author author2 = new Author("2", "Братья Стругацкие");
 
         template.save(new Book("Солярис", author1, null));
         template.save(new Book("Непобедимый", author1, null));
         template.save(new Book("Пикник на обочине", author2, null));
 
-        assertThat(bookRepository.findAllByAuthor(author2)).hasSize(1);
+        assertThat(bookRepository.findAllByAuthorId(author2.getId())).hasSize(1);
     }
 
     @Test
