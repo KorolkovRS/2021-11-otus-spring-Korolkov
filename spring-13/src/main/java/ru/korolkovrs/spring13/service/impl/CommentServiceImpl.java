@@ -14,40 +14,45 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private final CommentRepository dao;
+    private final CommentRepository commentRepository;
     private final CommentDataResolver dataResolver;
 
     @Override
     public Optional<Comment> findById(String id) {
-        return dao.findById(id);
+        return commentRepository.findById(id);
     }
 
     @Override
     public List<Comment> findAll() {
-        return dao.findAll();
+        return commentRepository.findAll();
     }
 
     @Override
     public Comment save(Comment comment) {
         comment = dataResolver.addOrUpdateDate(comment);
-        return dao.save(comment);
+        return commentRepository.save(comment);
     }
 
     @Override
     public void deleteById(String id) {
-        Comment comment = dao.findById(id).orElseThrow(
+        Comment comment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException(String.format("Комментраия с id=%d не найдено", id))
         );
-        dao.delete(comment);
+        commentRepository.delete(comment);
     }
 
     @Override
     public List<Comment> findByBook(Book book) {
-        return dao.findAllByBook(book);
+        return commentRepository.findAllByBook(book);
     }
 
     @Override
     public void deleteByBook(Book book) {
-        dao.deleteAllByBook(book);
+        commentRepository.deleteAllByBook(book);
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        commentRepository.updateBook(book);
     }
 }

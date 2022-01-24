@@ -6,11 +6,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import ru.korolkovrs.spring13.domain.Author;
 import ru.korolkovrs.spring13.domain.Book;
+import ru.korolkovrs.spring13.domain.Comment;
 import ru.korolkovrs.spring13.domain.Genre;
 import ru.korolkovrs.spring13.repository.BookRepository;
 import ru.korolkovrs.spring13.service.impl.BookServiceImpl;
+import ru.korolkovrs.spring13.service.impl.CommentServiceImpl;
+import ru.korolkovrs.spring13.service.impl.GenreServiceImpl;
+import ru.korolkovrs.spring13.util.CommentDataResolver;
 
 import java.util.List;
 import java.util.Optional;

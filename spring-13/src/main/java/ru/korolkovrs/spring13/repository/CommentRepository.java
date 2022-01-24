@@ -8,7 +8,7 @@ import ru.korolkovrs.spring13.domain.Comment;
 import java.util.List;
 
 @Repository
-public interface CommentRepository extends MongoRepository<Comment, String> {
+public interface CommentRepository extends MongoRepository<Comment, String>, CommentRepositoryCustom {
 
     List<Comment> findAllByBook(Book book);
 

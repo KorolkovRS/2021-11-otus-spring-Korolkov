@@ -21,4 +21,8 @@ public interface BookService {
     List<Book> findAll();
 
     void deleteById(String id);
+
+    void updateBookAuthor(Author author);
+
+    void updateBookGenre(Genre genre);
 }

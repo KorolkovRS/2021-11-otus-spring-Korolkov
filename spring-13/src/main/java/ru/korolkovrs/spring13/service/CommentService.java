@@ -18,4 +18,6 @@ public interface CommentService {
     List<Comment> findByBook(Book book);
 
     void deleteByBook(Book book);
+
+    void updateBook(Book book);
 }

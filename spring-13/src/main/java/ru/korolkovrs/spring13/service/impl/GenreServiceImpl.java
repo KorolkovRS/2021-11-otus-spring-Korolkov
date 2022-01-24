@@ -34,12 +34,8 @@ public class GenreServiceImpl implements GenreService {
         if (genre.getId() == null) {
             return genreRepository.save(genre);
         }
-        List<Book> books = bookService.findByGenre(genre);
         genreRepository.save(genre);
-        books.forEach(book -> {
-            book.setGenre(genre);
-            bookService.save(book);
-        });
+        bookService.updateBookGenre(genre);
         return genre;
     }
 }

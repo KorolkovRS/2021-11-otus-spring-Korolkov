@@ -8,7 +8,7 @@ import ru.korolkovrs.spring13.domain.Book;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends MongoRepository<Book, String> {
+public interface BookRepository extends MongoRepository<Book, String>, BookRepositoryCustom {
 
     List<Book> findAllByAuthorId(String authorId);
 

@@ -3,7 +3,6 @@ package ru.korolkovrs.spring13.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.korolkovrs.spring13.domain.Book;
 import ru.korolkovrs.spring13.repository.AuthorRepository;
 import ru.korolkovrs.spring13.domain.Author;
 import ru.korolkovrs.spring13.service.AuthorService;
@@ -39,12 +38,9 @@ public class AuthorServiceImpl implements AuthorService {
         if (author.getId() == null) {
             return authorRepository.save(author);
         }
-        List<Book> books = bookService.findByAuthor(author);
+
         authorRepository.save(author);
-        books.forEach(book -> {
-            book.setAuthor(author);
-            bookService.save(book);
-        });
+        bookService.updateBookAuthor(author);
         return author;
     }
 }

@@ -20,8 +20,14 @@ public class BookServiceImpl implements BookService {
     private final CommentService commentService;
 
     @Override
+    @Transactional
     public Book save(Book book) {
-        return bookRepository.save(book);
+        if (book.getId() == null) {
+            return bookRepository.save(book);
+        }
+        bookRepository.save(book);
+        commentService.updateBook(book);
+        return book;
     }
 
     @Override
@@ -57,5 +63,15 @@ public class BookServiceImpl implements BookService {
         );
         bookRepository.delete(book);
         commentService.deleteByBook(book);
+    }
+
+    @Override
+    public void updateBookAuthor(Author author) {
+        bookRepository.updateAuthor(author);
+    }
+
+    @Override
+    public void updateBookGenre(Genre genre) {
+        bookRepository.updateGenre(genre);
     }
 }
