@@ -21,6 +21,8 @@ public class CommentRepositoryCustomImpl implements CommentRepositoryCustom {
         query.addCriteria(Criteria.where("book._id").is(book.getId()));
         Update update = new Update();
         update.set("book.title", book.getTitle());
+        update.set("book.author", book.getAuthor());
+        update.set("book.genre", book.getGenre());
         template.updateMulti(query, update, Comment.class);
     }
 }

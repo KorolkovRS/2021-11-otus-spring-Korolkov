@@ -76,14 +76,16 @@ class CommentRepositoryTest {
         template.save(new Comment("Комментарий 3", book2));
 
         book1.setTitle(correctBookTitle);
+        book1.setAuthor(new Author("1", "Станислав Лем"));
+        book1.setGenre(new Genre("1", "Фантастика"));
 
         commentRepository.updateBook(book1);
         List<Comment> comments = commentRepository.findAllByBook(book1);
 
         assertAll(
                 () -> assertThat(comments).hasSize(2),
-                () -> assertThat(comments.get(0).getBook().getTitle()).isEqualTo(correctBookTitle),
-                () -> assertThat(comments.get(0).getBook().getTitle()).isEqualTo(correctBookTitle)
+                () -> assertThat(comments.get(0).getBook()).isEqualTo(book1),
+                () -> assertThat(comments.get(0).getBook()).isEqualTo(book1)
         );
     }
 }

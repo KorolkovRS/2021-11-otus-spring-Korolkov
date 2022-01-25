@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 import ru.korolkovrs.spring13.domain.Author;
 import ru.korolkovrs.spring13.domain.Book;
 import ru.korolkovrs.spring13.domain.Comment;
+import ru.korolkovrs.spring13.domain.Genre;
 import ru.korolkovrs.spring13.repository.BookRepository;
 import ru.korolkovrs.spring13.repository.CommentRepository;
 import ru.korolkovrs.spring13.service.impl.AuthorServiceImpl;
@@ -64,14 +65,16 @@ public class BookServiceImplIntegrationTest {
         commentService.save(new Comment("Комментарий 3", book2));
 
         book1.setTitle(correctBookTitle);
+        book1.setAuthor(new Author("1", "Станислав Лем"));
+        book1.setGenre(new Genre("1", "Фантастика"));
 
         bookService.save(book1);
         List<Comment> comments = commentRepository.findAllByBook(book1);
 
         assertAll(
                 () -> assertThat(comments).hasSize(2),
-                () -> assertThat(comments.get(0).getBook().getTitle()).isEqualTo(correctBookTitle),
-                () -> assertThat(comments.get(0).getBook().getTitle()).isEqualTo(correctBookTitle)
+                () -> assertThat(comments.get(0).getBook()).isEqualTo(book1),
+                () -> assertThat(comments.get(0).getBook()).isEqualTo(book1)
         );
     }
 }
