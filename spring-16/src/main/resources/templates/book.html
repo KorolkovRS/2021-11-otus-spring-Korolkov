@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+<div>
+    <a th:href="@{/}" href="books.html">На главную</a>
+</div>
+<div th:object="${book}">
+    <table book>
+        <tr>
+            <th>Id</th>
+            <th>Названи</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+        </tr>
+        <tr>
+            <td th:text="*{id}">id</td>
+            <td th:text="*{title}">название</td>
+            <td th:text="*{author.name}">автор</td>
+            <td th:text="*{genre.genreName}">жанр</td>
+        </tr>
+
+    </table>
+    <table comments>
+        <tr>
+            <th>Комментарий</th>
+            <th>Создан</th>
+            <th>Обновлен</th>
+
+        </tr>
+        <tr th:each="comment: *{comments}">
+            <td th:text="${comment.text}"></td>
+            <td th:text="${#dates.format(comment.createdAt, 'dd-MM-yy HH:mm:ss')}"></td>
+            <td th:text="${#dates.format(comment.updatedAt, 'dd-MM-yy HH:mm:ss')}"></td>
+            <td>
+                <form th:method="delete" th:action="@{/comment(id=${comment.id})}">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+            <td>
+                <form th:method="post" th:action="@{/comment/edit(id=${comment.id})}">
+                    <button type="submit">Редактировать</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<form id="add-comment-form" action="book.html" th:method="post" th:action="@{/comment}" th:object="${comment}">
+    <input id="text-input" type="text" value="Введите комментарий" th:field="*{text}">
+    <input id="book-id-input" type="text" th:value="${book.id}" name="bookId" hidden>
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>
