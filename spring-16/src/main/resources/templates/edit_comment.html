@@ -24,7 +24,7 @@
     </tr>
 </table>
 
-<form id="edit-form" action="edit_comment.html" th:method="post" th:action="@{/comment}" th:object="${comment}">
+<form id="edit-form" action="edit_comment.html" th:method="post" th:action="@{/comment/add}" th:object="${comment}">
     <input id="id-input" type="text" th:field="*{id}" hidden>
     <input id="title-input" type="text" value="text" th:field="*{text}">
     <input id="book-id-input" type="text" th:value="*{book.id}" name="bookId" hidden>

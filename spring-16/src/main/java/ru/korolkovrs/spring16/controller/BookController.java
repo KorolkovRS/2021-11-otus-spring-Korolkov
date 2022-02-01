@@ -44,7 +44,7 @@ public class BookController {
     }
 
     @GetMapping("/book/edit")
-    public String editBook(@RequestParam Long id, Model model) {
+    public String showEditBookForm(@RequestParam Long id, Model model) {
         Book book = bookService.findById(id).orElseThrow(NotFoundException::new);
         List<Author> authors = authorService.findAll();
         List<Genre> genres = genreService.findAll();
@@ -75,7 +75,7 @@ public class BookController {
     }
 
     @GetMapping("/book/add")
-    public String addBook(Model model){
+    public String showAddBookForm(Model model){
         List<Author> authors = authorService.findAll();
         List<Genre> genres = genreService.findAll();
         Map<String, Object> attributes = Map.of("book", new Book(), "authors", authors, "genres", genres);

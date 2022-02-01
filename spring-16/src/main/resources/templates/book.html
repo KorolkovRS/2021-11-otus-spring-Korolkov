@@ -50,7 +50,7 @@
     </table>
 </div>
 
-<form id="add-comment-form" action="book.html" th:method="post" th:action="@{/comment}" th:object="${comment}">
+<form id="add-comment-form" action="book.html" th:method="post" th:action="@{/comment/add}" th:object="${comment}">
     <input id="text-input" type="text" value="Введите комментарий" th:field="*{text}">
     <input id="book-id-input" type="text" th:value="${book.id}" name="bookId" hidden>
     <button type="submit">Сохранить</button>

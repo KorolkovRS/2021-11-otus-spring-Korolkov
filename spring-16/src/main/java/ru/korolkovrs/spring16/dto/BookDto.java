@@ -13,7 +13,7 @@ public class BookDto {
     private Long id;
 
     @NotBlank(message = "title should not be empty")
-    @Size(min = 1, max = 50, message = "title should has expected size")
+    @Size(max = 50, message = "title should has expected size")
     private String title;
 
     private Long author;
