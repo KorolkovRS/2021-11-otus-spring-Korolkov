@@ -9,7 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.korolkovrs.spring17.domain.Author;
 import ru.korolkovrs.spring17.domain.Book;
 import ru.korolkovrs.spring17.domain.Genre;
-import ru.korolkovrs.spring17.rest.dto.BookDto;
+import ru.korolkovrs.spring17.rest.dto.RequestBookDto;
+import ru.korolkovrs.spring17.rest.dto.converter.BookDtoConverter;
 import ru.korolkovrs.spring17.service.AuthorService;
 import ru.korolkovrs.spring17.service.BookService;
 import ru.korolkovrs.spring17.service.GenreService;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(BookController.class)
+@WebMvcTest()
 class BookControllerTest {
     private Book book1;
     private Book book2;
@@ -100,7 +101,7 @@ class BookControllerTest {
     @Test
     @DisplayName("Должен корректно обновлять книгу")
     public void shouldCorrectUpdateBook() throws Exception {
-        BookDto bookDto = new BookDto(
+        RequestBookDto requestBookDto = new RequestBookDto(
                 book1.getId(),
                 book1.getTitle(),
                 book1.getAuthor().getId(),
@@ -111,13 +112,13 @@ class BookControllerTest {
 
         given(authorService.findAll()).willReturn(authors);
         given(genreService.findAll()).willReturn(genres);
-        given(bookDtoConverter.toDomainObject(bookDto)).willReturn(book1);
+        given(bookDtoConverter.toDomainObject(requestBookDto)).willReturn(book1);
 
         mockMvc.perform(post("/book/edit")
-                .param("id", String.valueOf(bookDto.getId()))
-                .param("title", bookDto.getTitle())
-                .param("author", String.valueOf(bookDto.getAuthor()))
-                .param("genre", String.valueOf(bookDto.getGenre())))
+                .param("id", String.valueOf(requestBookDto.getId()))
+                .param("title", requestBookDto.getTitle())
+                .param("author", String.valueOf(requestBookDto.getAuthor()))
+                .param("genre", String.valueOf(requestBookDto.getGenre())))
                 .andExpect(status().is(302))
                 .andExpect(redirectedUrl("/"));
 

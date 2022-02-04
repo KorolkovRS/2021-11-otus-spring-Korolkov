@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.korolkovrs.spring17.domain.Comment;
-import ru.korolkovrs.spring17.rest.dto.CommentDto;
-import ru.korolkovrs.spring17.rest.dto.converterss.CommentDtoConverter;
+import ru.korolkovrs.spring17.rest.dto.RequestCommentDto;
 import ru.korolkovrs.spring17.exception.NotFoundException;
+import ru.korolkovrs.spring17.rest.dto.converter.CommentDtoConverter;
 import ru.korolkovrs.spring17.service.CommentService;
 
 @Controller
@@ -20,8 +20,8 @@ public class CommentController {
     private final CommentDtoConverter commentDtoConverter;
 
     @PostMapping("/comment/add")
-    public String addOrUpdateComment(CommentDto commentDto) {
-        Comment comment = commentDtoConverter.toDomainObject(commentDto);
+    public String addOrUpdateComment(RequestCommentDto requestCommentDto) {
+        Comment comment = commentDtoConverter.toDomainObject(requestCommentDto);
         commentService.save(comment);
         return "redirect:/book?id=" + comment.getBook().getId();
     }

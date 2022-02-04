@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDto {
+@Data
+public class GenreDto {
     private Long id;
-    private String text;
-    private Long bookId;
+
+    private String genreName;
 }

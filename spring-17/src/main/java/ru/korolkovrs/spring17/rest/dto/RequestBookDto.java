@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookDto {
+public class RequestBookDto {
     private Long id;
 
     @NotBlank(message = "title should not be empty")

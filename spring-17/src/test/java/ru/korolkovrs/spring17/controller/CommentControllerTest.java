@@ -11,8 +11,8 @@ import ru.korolkovrs.spring17.domain.Author;
 import ru.korolkovrs.spring17.domain.Book;
 import ru.korolkovrs.spring17.domain.Comment;
 import ru.korolkovrs.spring17.domain.Genre;
-import ru.korolkovrs.spring17.rest.dto.CommentDto;
-import ru.korolkovrs.spring17.rest.dto.converterss.CommentDtoConverter;
+import ru.korolkovrs.spring17.rest.dto.RequestCommentDto;
+import ru.korolkovrs.spring17.rest.dto.converter.CommentDtoConverter;
 import ru.korolkovrs.spring17.service.impl.CommentServiceImpl;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +61,7 @@ public class CommentControllerTest {
     @Test
     @DisplayName("Должен корректно добавлять/обновлять комментарий")
     public void shouldCorrectAddComment() throws Exception {
-        CommentDto dto = new CommentDto(comment.getId(), comment.getText(), comment.getBook().getId());
+        RequestCommentDto dto = new RequestCommentDto(comment.getId(), comment.getText(), comment.getBook().getId());
 
         given(dtoConverter.toDomainObject(dto)).willReturn(comment);
         given(commentService.findById(1L)).willReturn(Optional.of(comment));

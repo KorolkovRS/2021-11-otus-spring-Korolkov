@@ -36,5 +36,4 @@ public class Comment {
     @JoinColumn(name = "book_id")
     @ToString.Exclude
     private Book book;
-
 }
