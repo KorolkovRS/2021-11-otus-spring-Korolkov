@@ -64,7 +64,7 @@ class BookControllerTest {
         List<Book> expectedBooks = List.of(book1, book2);
         given(bookService.findAll()).willReturn(expectedBooks);
 
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/book"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("books"))
                 .andExpect(model().size(1))
@@ -77,8 +77,7 @@ class BookControllerTest {
     public void shouldReturnCorrectBookById() throws Exception {
         given(bookService.findById(book1.getId())).willReturn(Optional.of(book1));
 
-        mockMvc.perform(get("/book")
-                .param("id", "1"))
+        mockMvc.perform(get("/book/1") )
                 .andExpect(status().isOk())
                 .andExpect(view().name("book"))
                 .andExpect(model().size(2))

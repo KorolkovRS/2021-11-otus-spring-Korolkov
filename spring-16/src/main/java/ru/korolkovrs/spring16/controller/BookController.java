@@ -29,14 +29,19 @@ public class BookController {
     private final BookDtoConverter bookDtoConverter;
 
     @GetMapping("/")
+    public String index() {
+        return "redirect:/book";
+    }
+
+    @GetMapping("/book")
     public String getBooks(Model model) {
         List<Book> books = bookService.findAll();
         model.addAttribute("books", books);
         return "books";
     }
 
-    @GetMapping("book")
-    public String getBookById(@RequestParam Long id, Model model) {
+    @GetMapping("/book/{id}")
+    public String getBookById(@PathVariable Long id, Model model) {
         Book book = bookService.findById(id).orElseThrow(NotFoundException::new);
         model.addAttribute("book", book);
         model.addAttribute("comment", new Comment());
@@ -53,15 +58,20 @@ public class BookController {
         return "edit_book";
     }
 
-    @Validated
     @PostMapping("/book/edit")
     public String saveOrUpdateBook(@Validated @ModelAttribute("book") BookDto bookDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<Author> authors = authorService.findAll();
             List<Genre> genres = genreService.findAll();
-            Map<String, Object> attributes = Map.of("authors", authors, "genres", genres);
+            if (bookDto.getId() == null) {
+                Map<String, Object> attributes = Map.of("book", bookDto, "authors", authors, "genres", genres);
+                model.addAllAttributes(attributes);
+                return "add_book";
+            }
+            Book book = bookService.findById(bookDto.getId()).orElseThrow(NotFoundException::new);
+            Map<String, Object> attributes = Map.of("book", book, "authors", authors, "genres", genres);
             model.addAllAttributes(attributes);
-            return "add_book";
+            return "edit_book";
         }
         Book book = bookDtoConverter.toDomainObject(bookDto);
         bookService.save(book);
