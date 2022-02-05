@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<div>
+    <a th:href="@{/}" href="books.html">На главную</a>
+</div>
+<div th:object="${book}">
+    <table book>
+        <tr>
+            <th>Id</th>
+            <th>Названи</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+        </tr>
+        <tr>
+            <td th:text="*{id}">id</td>
+            <td th:text="*{title}">название</td>
+            <td th:text="*{author.name}">автор</td>
+            <td th:text="*{genre.genreName}">жанр</td>
+        </tr>
+    </table>
+</div>
+
+<form id="edit-form" action="edit_book.html" th:method="post" th:action="@{/book/edit}" th:object="${book}">
+    <input id="id-input" type="text" th:field="*{id}" hidden>
+    <input id="title-input" type="text" value="title" th:field="*{title}">
+    <select id="author" required th:value="*{author}" name="author">
+        <option
+                th:each="author : ${authors}"
+                th:text="${author.name}"
+                th:value="${author.id}"
+                value="">author
+        </option>
+    </select>
+    <select id="genre" required th:value="*{genre}" name="genre">
+        <option
+                th:each="genre : ${genres}"
+                th:text="${genre.genreName}"
+                th:value="${genre.id}"
+                value="">genre
+        </option>
+    </select>
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+<body>
+<div>
+    <a th:href="@{/}" href="books.html">На главную</a>
+</div>
+
+<form id="add-form" action="edit_book.html" th:method="post" th:action="@{/book/edit}" th:object="${book}">
+    <input id="title-input" type="text" value="Введите название книги" th:value="*{title}" name="title">
+    <select id="author" required th:value="*{author}" name="author">
+        <option
+                th:each="author : ${authors}"
+                th:text="${author.name}"
+                th:value="${author.id}"
+                value="">author
+        </option>
+    </select>
+    <select id="genre" required th:value="*{genre}" name="genre">
+        <option
+                th:each="genre : ${genres}"
+                th:text="${genre.genreName}"
+                th:value="${genre.id}"
+                value="">genre
+        </option>
+    </select>
+    <div class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Wrong title error</div>
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+</div>
+</body>
+</html>
