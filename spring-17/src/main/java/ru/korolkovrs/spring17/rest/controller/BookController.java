@@ -32,7 +32,9 @@ public class BookController {
     @PostMapping("/api/v1/books")
     public ResponseBookDto saveBook(@RequestBody RequestBookDto requestBookDto) {
         Book book = bookDtoConverter.toDomainObject(requestBookDto);
-        return bookDtoConverter.toResponseDto(bookService.save(book));
+        book = bookService.save(book);
+        ResponseBookDto responseBookDto = bookDtoConverter.toResponseDto(book);
+        return responseBookDto;
     }
 
     @PutMapping("api/v1/books")

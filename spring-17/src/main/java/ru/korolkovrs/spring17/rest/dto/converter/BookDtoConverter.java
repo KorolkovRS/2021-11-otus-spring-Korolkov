@@ -1,6 +1,7 @@
 package ru.korolkovrs.spring17.rest.dto.converter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.korolkovrs.spring17.domain.Book;
 import ru.korolkovrs.spring17.exception.NotFoundException;
@@ -8,11 +9,13 @@ import ru.korolkovrs.spring17.rest.dto.*;
 import ru.korolkovrs.spring17.service.AuthorService;
 import ru.korolkovrs.spring17.service.GenreService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class BookDtoConverter {
     private final AuthorService authorService;
     private final GenreService genreService;
@@ -32,6 +35,9 @@ public class BookDtoConverter {
     public ResponseBookDto toResponseDto(Book book) {
         AuthorDto authorDto = authorDtoConverter.toDto(book.getAuthor());
         GenreDto genreDto = genreDtoConverter.toDto(book.getGenre());
+        if (book.getComments() == null) {
+            book.setComments(new ArrayList<>());
+        }
         List<ResponseCommentDto> commentDtos = book.getComments().stream()
                 .map((comment -> commentDtoConverter.toResponseCommentDto(comment)))
                 .collect(Collectors.toList());
