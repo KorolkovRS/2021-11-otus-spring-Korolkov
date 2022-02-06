@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.korolkovrs.spring17.domain.Book;
 import ru.korolkovrs.spring17.domain.Comment;
-import ru.korolkovrs.spring17.exception.NotFoundException;
+import ru.korolkovrs.spring17.exception.ResourceNotFoundException;
 import ru.korolkovrs.spring17.repository.CommentRepository;
 import ru.korolkovrs.spring17.service.CommentService;
 
@@ -38,10 +38,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        Comment comment = dao.findById(id).orElseThrow(
-                () -> new NotFoundException(String.format("Комментраия с id=%d не найдено", id))
-        );
-        dao.delete(comment);
+        dao.deleteById(id);
     }
 
     @Override

@@ -29,5 +29,5 @@ CREATE TABLE comment
     text VARCHAR(1024) NOT NULL,
     book_id BIGINT REFERENCES book(book_id),
     created_at TIMESTAMP DEFAULT current_timestamp,
-    updated_at TIMESTAMP  DEFAULT current_timestamp
+    updated_at TIMESTAMP DEFAULT current_timestamp
 );

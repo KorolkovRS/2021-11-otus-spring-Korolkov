@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring17.service;
+package ru.korolkovrs.spring17.service.impl;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,28 +68,6 @@ class BookServiceImplTest {
     }
 
     @Test
-    @DisplayName("Должен вернуть книгу по названию")
-    void shouldGetBookByTitle() {
-        Book book = new Book(1L, "Война Миров", EXIST_AUTHOR_1, EXIST_GENRE_1, null);
-        List<Book> books = List.of(book);
-
-        given(repository.findAllByTitleIgnoreCaseContaining(book.getTitle())).willReturn(books);
-
-        assertThat(bookService.findByTitle(book.getTitle())).usingRecursiveComparison().isEqualTo(books);
-    }
-
-    @Test
-    @DisplayName("Должен вернуть книгу по автору")
-    void shouldGenBookByAuthorName() {
-        Book book = new Book(1L, "Война Миров", EXIST_AUTHOR_1, EXIST_GENRE_1, null);
-        List<Book> books = List.of(book);
-
-        given(repository.findAllByAuthor(book.getAuthor())).willReturn(books);
-
-        assertThat(bookService.findByAuthor(book.getAuthor())).usingRecursiveComparison().isEqualTo(books);
-    }
-
-    @Test
     @DisplayName("Должен вернуть все книги")
     void shouldGetAllBook() {
         List<Book> books = List.of(
@@ -103,15 +81,7 @@ class BookServiceImplTest {
     @Test
     @DisplayName("Должен делегировать запрос на удаление книги дао")
     void shouldDeleteBookById() {
-        Long id = 1L;
-        Book bookWithId1 = new Book();
-        given(repository.findById(id)).willReturn(Optional.of(bookWithId1));
-
-        bookService.deleteById(id);
-
-        assertAll(
-                () -> verify(repository, times(1)).findById(id),
-                () -> verify(repository, times(1)).delete(bookWithId1)
-        );
+        bookService.deleteById(1L);
+        verify(repository, times(1)).deleteById(1L);
     }
 }

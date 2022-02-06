@@ -1,3 +1,7 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/library_db
@@ -13,7 +17,6 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+    properties:
+      hibernate:
+        format_sql: true

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -12,11 +13,14 @@ import javax.validation.constraints.Size;
 public class RequestBookDto {
     private Long id;
 
+    @NotNull(message = "title is mandatory")
     @NotBlank(message = "title should not be empty")
-    @Size(max = 50, message = "title should has expected size")
+    @Size(max = 30, message = "title should has expected size")
     private String title;
 
-    private Long author;
+    @NotNull(message = "authorId is mandatory")
+    private Long authorId;
 
-    private Long genre;
+    @NotNull(message = "genreId is mandatory")
+    private Long genreId;
 }

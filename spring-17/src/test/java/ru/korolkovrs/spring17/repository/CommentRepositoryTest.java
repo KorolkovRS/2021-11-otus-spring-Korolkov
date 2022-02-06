@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring17.repository.impl;
+package ru.korolkovrs.spring17.repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,6 @@
 package ru.korolkovrs.spring17.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import ru.korolkovrs.spring17.domain.Author;
 import ru.korolkovrs.spring17.domain.Book;
 
@@ -11,11 +12,7 @@ public interface BookService {
 
     Optional<Book> findById(Long id);
 
-    List<Book> findByTitle(String title);
-
-    List<Book> findByAuthor(Author author);
-
-    List<Book> findAll();
+    List<Book> findAll(Specification<Book> spec);
 
     void deleteById(Long id);
 }

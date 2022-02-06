@@ -1,6 +1,7 @@
 package ru.korolkovrs.spring11.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.korolkovrs.spring11.repository.CommentRepository;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository dao;
 
@@ -31,7 +33,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment save(Comment comment) {
-        return dao.save(comment);
+        log.warn("do: " + comment.toString());
+        comment = dao.save(comment);
+        log.warn("posle: " + comment.toString());
+        return comment;
     }
 
     @Override
