@@ -15,6 +15,10 @@
                 templateUrl: 'books/books.html',
                 controller: 'booksController'
             })
+            .when('/book', {
+                templateUrl: 'book/book.html',
+                controller: 'bookController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
