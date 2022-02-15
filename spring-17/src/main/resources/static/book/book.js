@@ -1,11 +1,10 @@
 angular.module('app').controller('bookController', function ($scope, $http, $localStorage) {
-    const contextPath = 'http://localhost:8080';
 
     $scope.currentBookId = $localStorage.selectedBookId;
 
     $scope.showBook = function() {
         $http({
-            url: contextPath + '/api/v1/books/' + $scope.currentBookId,
+            url: 'api/v1/books/' + $scope.currentBookId,
             method: 'GET'
         }).then(function (response) {
             $scope.book = response.data;
@@ -14,7 +13,7 @@ angular.module('app').controller('bookController', function ($scope, $http, $loc
 
     $scope.updateBook = function (updateBook) {
         $http({
-            url: contextPath + '/api/v1/books',
+            url: 'api/v1/books',
             method: 'PUT',
             data: {
                 id: $scope.book.id,
@@ -32,7 +31,7 @@ angular.module('app').controller('bookController', function ($scope, $http, $loc
 
     $scope.showAuthors = function () {
         $http({
-            url: contextPath + '/api/v1/authors',
+            url: 'api/v1/authors',
             method: 'GET'
         }).then(function (response) {
             $scope.authors = response.data;
@@ -41,7 +40,7 @@ angular.module('app').controller('bookController', function ($scope, $http, $loc
 
     $scope.showGenres = function () {
         $http({
-            url: contextPath + '/api/v1/genres',
+            url: 'api/v1/genres',
             method: 'GET'
         }).then(function (response) {
             $scope.genres = response.data;

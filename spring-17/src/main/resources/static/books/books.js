@@ -1,12 +1,10 @@
-angular.module('app', []).controller('booksController', function ($scope, $http, $localStorage, $location) {
-    const contextPath = 'http://localhost:8080';
+angular.module('app').controller('booksController', function ($scope, $http, $localStorage) {
 
     $localStorage.currentBookId = null;
 
-    $scope.showBooks = function ($location) {
-        console.log($location.path())
+    $scope.showBooks = function () {
         $http({
-            url: contextPath + '/api/v1/books',
+            url: 'api/v1/books',
             method: 'GET',
             params: {
                 title: $scope.filter ? $scope.filter.title : null,
@@ -20,7 +18,7 @@ angular.module('app', []).controller('booksController', function ($scope, $http,
 
     $scope.showAuthors = function () {
         $http({
-            url: contextPath + '/api/v1/authors',
+            url: 'api/v1/authors',
             method: 'GET'
         }).then(function (response) {
             $scope.authors = response.data;
@@ -29,7 +27,7 @@ angular.module('app', []).controller('booksController', function ($scope, $http,
 
     $scope.showGenres = function () {
         $http({
-            url: contextPath + '/api/v1/genres',
+            url: 'api/v1/genres',
             method: 'GET'
         }).then(function (response) {
             $scope.genres = response.data;
@@ -42,7 +40,7 @@ angular.module('app', []).controller('booksController', function ($scope, $http,
 
     $scope.deleteBook = function (bookId) {
         $http({
-            url: contextPath + '/api/v1/books/' + bookId,
+            url: 'api/v1/books/' + bookId,
             method: 'DELETE'
         }).then(function (response) {
             $scope.showBooks();
@@ -55,7 +53,7 @@ angular.module('app', []).controller('booksController', function ($scope, $http,
 
     $scope.saveBook = function (book) {
         $http({
-            url: contextPath + '/api/v1/books',
+            url: 'api/v1/books',
             method: 'POST',
             data: {
                 title: book.title,
