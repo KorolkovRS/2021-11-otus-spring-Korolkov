@@ -1,0 +1,40 @@
+<h3>Информация о книге</h3>
+<table class="table table-hover" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Автор</td>
+            <td>Жанр</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{book.title}}</td>
+            <td>{{book.author.name}}</td>
+            <td>{{book.genre.genreName}}</td>
+        </tr>
+        </tbody>
+</table>
+
+<h3>Комментарии</h3>
+<table class="table table-hover" cellpadding="0" cellspacing="0">
+    <tbody>
+    <tr ng-repeat="c in book.comments">
+        <td>{{c.text}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Обновить информацию о книге:</h3>
+<form name="book-input-form" class="css-form">
+    <input type="text" ng-model="updateBook.title" placeholder="{{book.title}}" name="title-input">
+    <select name="authorSelect" ng-model="updateBook.authorId">
+        <option ng-repeat="a in authors" value={{a.id}}>{{a.name}}</option>
+    </select>
+    <select name="genreSelect" ng-model="updateBook.genreId">
+        <option ng-repeat="g in genres" value={{g.id}}>{{g.genreName}}</option>
+    </select>
+    <div>
+        <button type="submit" ng-click="updateBook(updateBook)">Сохранить</button>
+    </div>
+</form>
