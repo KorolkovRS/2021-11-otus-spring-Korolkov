@@ -1,0 +1,16 @@
+spring:
+  mongodb:
+    embedded:
+      version: 3.5.5
+  data:
+    mongodb:
+      port: 0
+      database: test
+
+mongock:
+  change-logs-scan-package: ru.korolkovrs.spring20.testChangelogs
+
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
