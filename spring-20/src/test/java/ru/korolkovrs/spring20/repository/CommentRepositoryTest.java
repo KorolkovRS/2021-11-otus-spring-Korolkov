@@ -36,9 +36,9 @@ class CommentRepositoryTest {
         String bookId = "book_id";
         Book expectedBook = new Book(bookId, "book", new Author(), new Genre());
         commentRepository.save(new Comment("1", "test1", expectedBook)).subscribe();
-        commentRepository.save(new Comment("2", "test2", new Book(bookId, "book11", new Author(), new Genre()))).subscribe();
+        commentRepository.save(new Comment("2", "test2", new Book(bookId, "book11", new Author(), new Genre()))).block();
 
-        commentRepository.deleteAllByBookId(bookId).subscribe();
+        commentRepository.deleteAllByBookId(bookId).block();
 
         Flux<Comment> commentFlux = commentRepository.findByBookId(bookId);
 

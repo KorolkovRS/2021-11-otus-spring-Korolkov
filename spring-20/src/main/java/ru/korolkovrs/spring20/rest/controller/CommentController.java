@@ -47,8 +47,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/api/v1/comments/{id}")
-    public void deleteCommentById(@PathVariable String id) {
-        commentRepository.deleteById(id).subscribe();
+    public Mono<Void> deleteCommentById(@PathVariable String id) {
+        return Mono.when(commentRepository.deleteById(id));
     }
 
     private Mono<ResponseCommentDto> collectCommentAndSave(RequestCommentDto requestCommentDto) {

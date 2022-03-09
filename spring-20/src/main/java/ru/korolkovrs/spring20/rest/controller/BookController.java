@@ -54,11 +54,11 @@ public class BookController {
     }
 
     @DeleteMapping("/api/v1/books/{id}")
-    public void deleteBookById(@PathVariable String id) {
-        Mono.zip(
+    public Mono<Void> deleteBookById(@PathVariable String id) {
+        return Mono.when(
                 bookRepository.deleteById(id),
                 commentRepository.deleteAllByBookId(id)
-        ).subscribe();
+        );
     }
 
     private Mono<ResponseBookDto> collectBookAndSave(RequestBookDto requestBookDto) {
