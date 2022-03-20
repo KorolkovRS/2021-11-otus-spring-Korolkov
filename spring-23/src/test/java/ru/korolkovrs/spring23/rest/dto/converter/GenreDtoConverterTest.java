@@ -11,7 +11,7 @@ public class GenreDtoConverterTest {
     private GenreDtoConverter converter = new GenreDtoConverter();
 
     @Test
-    public void shouldCorrectConvertDtoToDomain() {
+    void shouldCorrectConvertDtoToDomain() {
         GenreDto dto = new GenreDto(1L, "Genre");
         Genre genre = converter.toDomainObject(dto);
 
@@ -22,7 +22,7 @@ public class GenreDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertDomainToDto() {
+    void shouldCorrectConvertDomainToDto() {
         Genre genre = new Genre(1L, "Author");
         GenreDto dto = converter.toDto(genre);
 

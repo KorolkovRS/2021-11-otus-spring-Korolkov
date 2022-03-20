@@ -55,12 +55,4 @@ class GenreControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(expectedResponse)));
     }
-
-    @DisplayName("Должен не пропустить неавторизированных пользователям при запрсе жанров")
-    @Test
-    void unauthorizedUserNotReceiveGenres() throws Exception {
-        mockMvc.perform(get("/api/v1/genres"))
-                .andExpect(status().is(302))
-                .andExpect(redirectedUrlPattern("**/login"));
-    }
 }

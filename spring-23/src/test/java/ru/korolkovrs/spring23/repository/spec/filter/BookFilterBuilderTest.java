@@ -31,7 +31,7 @@ public class BookFilterBuilderTest {
     private BookFilterBuilder bookFilterBuilder;
 
     @Test
-    public void shouldCorrectBuildBookFilter() {
+    void shouldCorrectBuildBookFilter() {
         String titlePattern = "Преступление";
         String authorNamePattern = "Толстой";
         String genreId = "1";

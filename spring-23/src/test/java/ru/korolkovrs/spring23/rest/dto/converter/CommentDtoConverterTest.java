@@ -32,7 +32,7 @@ public class CommentDtoConverterTest {
     private CommentDtoConverter converter;
 
     @Test
-    public void shouldCorrectConvertDomainToResponseCommentDto() {
+    void shouldCorrectConvertDomainToResponseCommentDto() {
         Book expectedBook = new Book(1L, "book", null, null, null);
         Comment comment = new Comment(
                 1L,
@@ -53,7 +53,7 @@ public class CommentDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertRequestWithIdCommentDtoToDomain() {
+    void shouldCorrectConvertRequestWithIdCommentDtoToDomain() {
         Book expectedBook = new Book(2L, "book", null, null, null);
         RequestCommentDto dto = new RequestCommentDto(1L, "new comment", 2L);
         Comment expectedComment = new Comment(
@@ -79,7 +79,7 @@ public class CommentDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertRequestWithoutIdCommentDtoToDomain() {
+    void shouldCorrectConvertRequestWithoutIdCommentDtoToDomain() {
         Book expectedBook = new Book(1L, "book", null, null, null);
         RequestCommentDto dto = new RequestCommentDto(null, "new comment", 1L);
 

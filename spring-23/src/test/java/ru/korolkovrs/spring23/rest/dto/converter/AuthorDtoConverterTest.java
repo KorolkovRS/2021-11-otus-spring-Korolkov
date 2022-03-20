@@ -11,7 +11,7 @@ public class AuthorDtoConverterTest {
     private AuthorDtoConverter converter = new AuthorDtoConverter();
 
     @Test
-    public void shouldCorrectConvertDtoToDomain() {
+    void shouldCorrectConvertDtoToDomain() {
         AuthorDto dto = new AuthorDto(1L, "Author");
         Author author = converter.toDomainObject(dto);
 
@@ -22,7 +22,7 @@ public class AuthorDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertDomainToDto() {
+    void shouldCorrectConvertDomainToDto() {
         Author author = new Author(1L, "Author");
         AuthorDto dto = converter.toDto(author);
 

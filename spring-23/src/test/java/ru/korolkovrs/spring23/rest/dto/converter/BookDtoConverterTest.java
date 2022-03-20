@@ -55,7 +55,7 @@ public class BookDtoConverterTest {
     private BookDtoConverter bookDtoConverter;
 
     @Test
-    public void shouldCorrectConvertRequestBookDtoToDomain() {
+    void shouldCorrectConvertRequestBookDtoToDomain() {
         given(authorService.findById(1L)).willReturn(Optional.of(EXPECTED_AUTHOR));
         given(genreService.findById(1L)).willReturn(Optional.of(EXPECTED_GENRE));
 
@@ -72,7 +72,7 @@ public class BookDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertDomainTotoResponseDtoWithoutComments() {
+    void shouldCorrectConvertDomainTotoResponseDtoWithoutComments() {
         ResponseBookDto responseBookDto = bookDtoConverter.toResponseDtoWithoutComments(EXPECTED_BOOK);
 
         assertAll(
@@ -85,7 +85,7 @@ public class BookDtoConverterTest {
     }
 
     @Test
-    public void shouldCorrectConvertDomainTotoResponseDtoIncludeComments() {
+    void shouldCorrectConvertDomainTotoResponseDtoIncludeComments() {
         given(commentService.findByBook(EXPECTED_BOOK)).willReturn(List.of(EXPECTED_COMMENT));
 
         ResponseBookDto responseBookDto = bookDtoConverter.toResponseDtoIncludeComments(EXPECTED_BOOK);

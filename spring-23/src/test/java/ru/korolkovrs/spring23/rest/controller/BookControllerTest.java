@@ -1,6 +1,7 @@
 package ru.korolkovrs.spring23.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,8 @@ class BookControllerTest {
     @MockBean
     private BookFilterBuilder bookFilterBuilder;
 
-    @PostConstruct
-    public void init() {
+    @BeforeEach
+    void init() {
         existBook1 = new Book(1L, "book1", new Author(), new Genre(), new ArrayList<>());
         existBook2 = new Book(2L, "book2", new Author(), new Genre(), new ArrayList<>());
     }
@@ -68,7 +69,7 @@ class BookControllerTest {
     )
     @Test
     @DisplayName("Должен возвращать все книги")
-    public void shouldReturnCorrectBookList() throws Exception {
+    void shouldReturnCorrectBookList() throws Exception {
         List<Book> existBooks = List.of(existBook1, existBook2);
         ResponseBookDto expectedDto1 = new ResponseBookDto(1L, "dto1", null, null, null);
         ResponseBookDto expectedDto2 = new ResponseBookDto(2L, "dto2", null, null, null);
@@ -87,21 +88,13 @@ class BookControllerTest {
                 .andExpect(content().json(mapper.writeValueAsString(expectedResponse)));
     }
 
-    @DisplayName("Должен не пропустить неавторизированных пользователям при запрсе книг")
-    @Test
-    void unauthorizedUserNotReceiveGenres() throws Exception {
-        mockMvc.perform(get("/api/v1/books"))
-                .andExpect(status().is(302))
-                .andExpect(redirectedUrlPattern("**/login"));
-    }
-
     @WithMockUser(
             username = "user",
             authorities = {"ROLE_USER"}
     )
     @Test
     @DisplayName("Должен возвращать книгу по id")
-    public void shouldReturnCorrectBookById() throws Exception {
+    void shouldReturnCorrectBookById() throws Exception {
         ResponseBookDto expectedResponse = new ResponseBookDto(1L, "dto1", null, null, new ArrayList<>());
 
         given(bookService.findById(existBook1.getId())).willReturn(Optional.of(existBook1));
@@ -112,13 +105,6 @@ class BookControllerTest {
                 .andExpect(content().json(mapper.writeValueAsString(expectedResponse)));
     }
 
-    @DisplayName("Должен не пропустить неавторизированных пользователям при запрсе книги по id")
-    @Test
-    void unauthorizedUserNotReceiveBookById() throws Exception {
-        mockMvc.perform(get("/api/v1/book/*"))
-                .andExpect(status().is(302))
-                .andExpect(redirectedUrlPattern("**/login"));
-    }
 
     @WithMockUser(
             username = "admin",
@@ -126,7 +112,7 @@ class BookControllerTest {
     )
     @Test
     @DisplayName("Должен корректно сохранять книгу")
-    public void shouldCorrectSaveNewBook() throws Exception {
+    void shouldCorrectSaveNewBook() throws Exception {
         RequestBookDto requestBookDto = new RequestBookDto(null, "Book", 1L, 1L);
         Book savingBook = new Book(null, "Book", new Author(), new Genre(), new ArrayList<>());
         ResponseBookDto responseBookDto = new ResponseBookDto(
@@ -150,23 +136,12 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "user",
-            authorities = {"ROLE_USER"}
-    )
-    @DisplayName("Пользователь не админ не может сохранить новую книгу")
-    @Test
-    void userUnableSaveBook() throws Exception {
-        mockMvc.perform(post("/api/v1/books"))
-                .andExpect(status().is(403));
-    }
-
-    @WithMockUser(
             username = "admin",
             authorities = {"ROLE_ADMIN"}
     )
     @Test
     @DisplayName("Должен корректно обновлять книгу")
-    public void shouldCorrectUpdateBook() throws Exception {
+    void shouldCorrectUpdateBook() throws Exception {
         RequestBookDto requestBookDto = new RequestBookDto(1L, "Book", 1L, 1L);
         Book savingBook = new Book(null, "Book", new Author(), new Genre(), new ArrayList<>());
         ResponseBookDto responseBookDto = new ResponseBookDto(
@@ -190,23 +165,12 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "user",
-            authorities = {"ROLE_USER"}
-    )
-    @DisplayName("Пользователь не админ не может обновить книгу")
-    @Test
-    void userUnableUpdateBook() throws Exception {
-        mockMvc.perform(put("/api/v1/books"))
-                .andExpect(status().is(403));
-    }
-
-    @WithMockUser(
             username = "admin",
             authorities = {"ROLE_ADMIN"}
     )
     @Test
     @DisplayName("Должен удалять книгу по id")
-    public void shouldCorrectRemoveBookById() throws Exception {
+    void shouldCorrectRemoveBookById() throws Exception {
         mockMvc.perform(delete("/api/v1/books/" + existBook1.getId()))
                 .andExpect(status().isOk());
 
@@ -214,22 +178,11 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "user",
-            authorities = {"ROLE_USER"}
-    )
-    @DisplayName("Пользователь не админ не может удалить книгу")
-    @Test
-    void userUnableDeleteBook() throws Exception {
-        mockMvc.perform(delete("/api/v1/books/*"))
-                .andExpect(status().is(403));
-    }
-
-    @WithMockUser(
             username = "admin",
             authorities = {"ROLE_ADMIN"}
     )
     @Test
-    public void shouldNotSaveExistingBook() throws Exception {
+    void shouldNotSaveExistingBook() throws Exception {
         RequestBookDto requestBookDto = new RequestBookDto(1L, "Book", 1L, 1L);
 
         mockMvc.perform(post("/api/v1/books").contentType(MediaType.APPLICATION_JSON)
@@ -242,7 +195,7 @@ class BookControllerTest {
             authorities = {"ROLE_ADMIN"}
     )
     @Test
-    public void shouldValidateSaveBookRequest() throws Exception {
+    void shouldValidateSaveBookRequest() throws Exception {
         RequestBookDto requestWithBlankTitle = new RequestBookDto(null, "", 1L, 1L);
         RequestBookDto requestWithEmptyTitle = new RequestBookDto(null, null, 1L, 1L);
         RequestBookDto requestWithEmptyAuthorId = new RequestBookDto(null, "book", null, 1L);
@@ -269,7 +222,7 @@ class BookControllerTest {
             authorities = {"ROLE_ADMIN"}
     )
     @Test
-    public void shouldValidateUpdateBookRequest() throws Exception {
+    void shouldValidateUpdateBookRequest() throws Exception {
         RequestBookDto requestWithBlankTitle = new RequestBookDto(1L, "", 1L, 1L);
         RequestBookDto requestWithEmptyTitle = new RequestBookDto(1L, null, 1L, 1L);
         RequestBookDto requestWithEmptyAuthorId = new RequestBookDto(1L, "book", null, 1L);

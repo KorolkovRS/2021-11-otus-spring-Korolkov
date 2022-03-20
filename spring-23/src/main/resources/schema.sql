@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS book CASCADE;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS t_user CASCADE;
-DROP TABLE IF EXISTS t_role CASCADE;
-DROP TABLE IF EXISTS users_roles;
+DROP TABLE IF EXISTS authority CASCADE;
+DROP TABLE IF EXISTS users_authorities;
 
 CREATE TABLE author
 (
@@ -42,15 +42,15 @@ CREATE TABLE t_user
     password VARCHAR(60) NOT NULL
 );
 
-CREATE TABLE t_role
+CREATE TABLE authority
 (
-    role_id BIGSERIAL PRIMARY KEY,
+    authority_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE
 );
 
-CREATE TABLE users_roles
+CREATE TABLE users_authorities
 (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES t_user(user_id),
-    role_id BIGINT REFERENCES t_role(role_id)
+    authority_id BIGINT REFERENCES authority(authority_id)
 );

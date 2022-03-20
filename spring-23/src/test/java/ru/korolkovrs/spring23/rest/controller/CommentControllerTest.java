@@ -63,20 +63,12 @@ public class CommentControllerTest {
                 .andExpect(content().json(mapper.writeValueAsString(responseCommentDto)));
     }
 
-    @DisplayName("Не авторизованный пользователь не может оставлять комментарии")
-    @Test
-    void unauthorizedUserUnableSaveComment() throws Exception {
-        mockMvc.perform(get("/api/v1/comments"))
-                .andExpect(status().is(302))
-                .andExpect(redirectedUrlPattern("**/login"));
-    }
-
     @WithMockUser(
             username = "admin",
             authorities = {"ROLE_ADMIN"}
     )
     @Test
-    public void shouldCorrectUpdateComment() throws Exception {
+    void shouldCorrectUpdateComment() throws Exception {
         RequestCommentDto requestCommentDto = new RequestCommentDto(1L, "comment", 1L);
         Comment saveRequestComment = new Comment(1L, "comment", null, null, new Book());
         Comment addedComment = new Comment(1L, "comment", new Date(), new Date(), new Book());
@@ -93,22 +85,11 @@ public class CommentControllerTest {
     }
 
     @WithMockUser(
-            username = "user",
-            authorities = {"ROLE_USER"}
-    )
-    @DisplayName("Пользователь не админ не может обновить комментарий")
-    @Test
-    void userUnableUpdateComment() throws Exception {
-        mockMvc.perform(put("/api/v1/comments"))
-                .andExpect(status().is(403));
-    }
-
-    @WithMockUser(
             username = "admin",
             authorities = {"ROLE_ADMIN"}
     )
     @Test
-    public void shouldDeleteCommentById() throws Exception {
+    void shouldDeleteCommentById() throws Exception {
         mockMvc.perform(delete("/api/v1/comments/1"))
                 .andExpect(status().isOk());
 
@@ -119,20 +100,8 @@ public class CommentControllerTest {
             username = "user",
             authorities = {"ROLE_USER"}
     )
-    @DisplayName("Пользователь не админ не может удалить комментарий")
     @Test
-    void userUnableDeleteComment() throws Exception {
-        mockMvc.perform(delete("/api/v1/comments/*"))
-                .andExpect(status().is(403));
-    }
-
-
-    @WithMockUser(
-            username = "user",
-            authorities = {"ROLE_USER"}
-    )
-    @Test
-    public void shouldNotSaveExistingComment() throws Exception {
+    void shouldNotSaveExistingComment() throws Exception {
         RequestCommentDto requestCommentDto = new RequestCommentDto(1L, "comment", 1L);
 
         mockMvc.perform(post("/api/v1/comments").contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +114,7 @@ public class CommentControllerTest {
             authorities = {"ROLE_USER"}
     )
     @Test
-    public void shouldValidateSaveCommentRequest() {
+    void shouldValidateSaveCommentRequest() {
         RequestCommentDto requestWithBlankText = new RequestCommentDto(1L, "", 1L);
         RequestCommentDto requestWithEmptyText = new RequestCommentDto(1L, null, 1L);
         RequestCommentDto requestWithEmptyBookId = new RequestCommentDto(1L, "comment", null);
