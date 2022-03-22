@@ -1,13 +1,13 @@
-INSERT INTO author(name)
+INSERT INTO authorJpa(name)
 VALUES ('Ф.М. Достоевский'),
        ('Л.Н. Толстой'),
        ('Роджер Желязны');
 
-INSERT INTO genre(genre_name)
+INSERT INTO genreJpa(genre_name)
 VALUES ('Русская классика'),
        ('Фантастика');
 
-INSERT INTO book(title, author_id, genre_id)
+INSERT INTO bookJpa(title, author_id, genre_id)
 VALUES ('Преступление и наказание', 1, 1),
        ('Война и мир', 2, 1),
        ('Хроники Амбера', 3, 2),
@@ -16,7 +16,7 @@ VALUES ('Преступление и наказание', 1, 1),
        ('Кавказский пленник', 1, 1);
 
 
-INSERT INTO comment(text, book_id)
+INSERT INTO commentJpa(text, book_id)
 VALUES ('Русская классика это страдание. Страдает главный герой, автор или читатель. ' ||
         'Если страдают все трое, то это шедевр русской классики.', 1),
        ('Описание природы', 1),

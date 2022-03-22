@@ -1,20 +1,20 @@
 package ru.korolkovrs.spring26.util;
 
 import org.springframework.stereotype.Component;
-import ru.korolkovrs.spring26.domain.Comment;
+import ru.korolkovrs.spring26.domain.jpa.CommentJpa;
 
 import java.util.Date;
 
 @Component
 public class CommentDataResolver {
-    public Comment addOrUpdateDate(Comment comment) {
+    public CommentJpa addOrUpdateDate(CommentJpa commentJpa) {
         Date date = new Date();
-        if (comment.getCreatedAt() == null) {
-            comment.setCreatedAt(date);
-            comment.setUpdatedAt(date);
-            return comment;
+        if (commentJpa.getCreatedAt() == null) {
+            commentJpa.setCreatedAt(date);
+            commentJpa.setUpdatedAt(date);
+            return commentJpa;
         }
-        comment.setUpdatedAt(date);
-        return comment;
+        commentJpa.setUpdatedAt(date);
+        return commentJpa;
     }
 }

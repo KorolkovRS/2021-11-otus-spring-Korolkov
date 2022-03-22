@@ -4,30 +4,30 @@ import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.decorator.impl.MongockTemplate;
 import com.mongodb.client.MongoDatabase;
-import ru.korolkovrs.spring26.domain.Author;
-import ru.korolkovrs.spring26.domain.Book;
-import ru.korolkovrs.spring26.domain.Comment;
-import ru.korolkovrs.spring26.domain.Genre;
+import ru.korolkovrs.spring26.domain.jpa.AuthorJpa;
+import ru.korolkovrs.spring26.domain.jpa.BookJpa;
+import ru.korolkovrs.spring26.domain.jpa.CommentJpa;
+import ru.korolkovrs.spring26.domain.jpa.GenreJpa;
 import ru.korolkovrs.spring26.util.CommentDataResolver;
 
 
 @ChangeLog(order = "001")
 public class initMongoDBDataChangeLog {
 
-    private Author author1;
-    private Author author2;
-    private Author author3;
+    private AuthorJpa authorJpa1;
+    private AuthorJpa authorJpa2;
+    private AuthorJpa authorJpa3;
 
-    private Genre genre1;
-    private Genre genre2;
+    private GenreJpa genreJpa1;
+    private GenreJpa genreJpa2;
 
-    private Book book1;
-    private Book book2;
-    private Book book3;
+    private BookJpa bookJpa1;
+    private BookJpa bookJpa2;
+    private BookJpa bookJpa3;
 
-    private Comment comment1;
-    private Comment comment2;
-    private Comment comment3;
+    private CommentJpa commentJpa1;
+    private CommentJpa commentJpa2;
+    private CommentJpa commentJpa3;
 
     @ChangeSet(order = "000", id = "dropDB", author = "korolkovrs", runAlways = true)
     public void dropDB(MongoDatabase database) {
@@ -36,37 +36,37 @@ public class initMongoDBDataChangeLog {
 
     @ChangeSet(order = "001", id = "addAuthors", author = "korolkovrs", runAlways = true)
     public void addAuthors(MongockTemplate template) {
-        author1 = template.save(new Author("Ф.М. Достоевский"));
-        author2 = template.save(new Author("Л.Н. Толстой"));
-        author3 = template.save(new Author("Роджер Желязны"));
+        authorJpa1 = template.save(new AuthorJpa("Ф.М. Достоевский"));
+        authorJpa2 = template.save(new AuthorJpa("Л.Н. Толстой"));
+        authorJpa3 = template.save(new AuthorJpa("Роджер Желязны"));
     }
 
     @ChangeSet(order = "002", id = "addGenres", author = "korolkovrs", runAlways = true)
     public void addGenres(MongockTemplate template) {
-        genre1 = template.save(new Genre("Русская классика"));
-        genre2 = template.save(new Genre("Фантастика"));
+        genreJpa1 = template.save(new GenreJpa("Русская классика"));
+        genreJpa2 = template.save(new GenreJpa("Фантастика"));
     }
 
     @ChangeSet(order = "003", id = "addBooks", author = "korolkovrs", runAlways = true)
     public void addBooks(MongockTemplate template) {
-        book1 = template.save(new Book("Преступление и наказание", author1, genre1));
-        book2 = template.save(new Book("Война и мир", author2, genre1));
-        book3 = template.save(new Book("Хроники Амбера", author3, genre2));
+        bookJpa1 = template.save(new BookJpa("Преступление и наказание", authorJpa1, genreJpa1));
+        bookJpa2 = template.save(new BookJpa("Война и мир", authorJpa2, genreJpa1));
+        bookJpa3 = template.save(new BookJpa("Хроники Амбера", authorJpa3, genreJpa2));
     }
 
     @ChangeSet(order = "004", id = "addComments", author = "korolkovrs", runAlways = true)
     public void addComments(MongockTemplate template) {
         CommentDataResolver dataResolver = new CommentDataResolver();
-        comment1 = template.save(
-                dataResolver.addOrUpdateDate(new Comment("Русская классика это страдание. Страдает главный герой, автор или читатель. " +
-                        "Если страдают все трое, то это шедевр русской классики.", book2)
+        commentJpa1 = template.save(
+                dataResolver.addOrUpdateDate(new CommentJpa("Русская классика это страдание. Страдает главный герой, автор или читатель. " +
+                        "Если страдают все трое, то это шедевр русской классики.", bookJpa2)
                 )
         );
-        comment2 = template.save(
-                dataResolver.addOrUpdateDate(new Comment("Описание природы", book2))
+        commentJpa2 = template.save(
+                dataResolver.addOrUpdateDate(new CommentJpa("Описание природы", bookJpa2))
         );
-        comment3 = template.save(
-                dataResolver.addOrUpdateDate(new Comment("Золотая коллекция зарубежной фантазии", book3))
+        commentJpa3 = template.save(
+                dataResolver.addOrUpdateDate(new CommentJpa("Золотая коллекция зарубежной фантазии", bookJpa3))
         );
     }
 }

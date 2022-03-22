@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring26.domain;
+package ru.korolkovrs.spring26.domain.mongo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Author {
+public class AuthorMongo {
 
-    public Author(String name) {
+    public AuthorMongo(String name) {
         this.name = name;
     }
 

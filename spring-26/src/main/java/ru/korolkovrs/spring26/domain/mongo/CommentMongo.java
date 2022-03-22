@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring26.domain;
+package ru.korolkovrs.spring26.domain.mongo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,11 @@ import java.util.Date;
 @Document("comment")
 @Data
 @NoArgsConstructor
-public class Comment {
+public class CommentMongo {
 
-    public Comment(String text, Book book) {
+    public CommentMongo(String text, BookMongo bookMongo) {
         this.text = text;
-        this.book = book;
+        this.bookMongo = bookMongo;
     }
 
     @Id
@@ -22,7 +22,7 @@ public class Comment {
 
     private String text;
 
-    private Book book;
+    private BookMongo bookMongo;
 
     private Date createdAt;
 

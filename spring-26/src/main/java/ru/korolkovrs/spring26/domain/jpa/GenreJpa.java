@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring26.domain;
+package ru.korolkovrs.spring26.domain.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Genre {
+public class GenreJpa {
 
-    public Genre(String genreName) {
+    public GenreJpa(String genreName) {
         this.genreName = genreName;
     }
 

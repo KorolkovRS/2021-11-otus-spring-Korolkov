@@ -1,4 +1,4 @@
-package ru.korolkovrs.spring26.domain;
+package ru.korolkovrs.spring26.domain.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Book {
+public class BookJpa {
 
-    public Book(String title, Author author, Genre genre) {
+    public BookJpa(String title, AuthorJpa authorJpa, GenreJpa genreJpa) {
         this.title = title;
-        this.author = author;
-        this.genre = genre;
+        this.authorJpa = authorJpa;
+        this.genreJpa = genreJpa;
     }
 
     @Id
@@ -23,7 +23,7 @@ public class Book {
 
     private String title;
 
-    private Author author;
+    private AuthorJpa authorJpa;
 
-    private Genre genre;
+    private GenreJpa genreJpa;
 }
