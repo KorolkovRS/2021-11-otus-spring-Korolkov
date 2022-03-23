@@ -3,22 +3,20 @@ package ru.korolkovrs.spring26.domain.jpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 
-@Document("genre")
+@Entity
+@Table(name = "genre")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class GenreJpa {
-
-    public GenreJpa(String genreName) {
-        this.genreName = genreName;
-    }
-
     @Id
-    private String id;
+    @Column(name = "genre_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "genre_name", nullable = false)
     private String genreName;
 }

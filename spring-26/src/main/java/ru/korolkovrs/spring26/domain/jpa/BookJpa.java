@@ -3,27 +3,36 @@ package ru.korolkovrs.spring26.domain.jpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("book")
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "book")
 public class BookJpa {
-
-    public BookJpa(String title, AuthorJpa authorJpa, GenreJpa genreJpa) {
-        this.title = title;
-        this.authorJpa = authorJpa;
-        this.genreJpa = genreJpa;
-    }
-
     @Id
-    private String id;
+    @Column(name = "book_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "title", nullable = false)
     private String title;
 
-    private AuthorJpa authorJpa;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private AuthorJpa author;
 
-    private GenreJpa genreJpa;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private GenreJpa genre;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CommentJpa> comments;
 }

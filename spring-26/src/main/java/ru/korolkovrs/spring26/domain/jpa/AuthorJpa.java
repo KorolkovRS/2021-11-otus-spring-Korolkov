@@ -3,21 +3,19 @@ package ru.korolkovrs.spring26.domain.jpa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("author")
+import javax.persistence.*;
+
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "author")
 public class AuthorJpa {
-
-    public AuthorJpa(String name) {
-        this.name = name;
-    }
-
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "author_id")
+    private Long id;
 
     private String name;
 }

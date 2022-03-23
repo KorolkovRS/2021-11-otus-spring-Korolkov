@@ -1,39 +1,58 @@
 package ru.korolkovrs.spring26.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.Step;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.data.RepositoryItemWriter;
-import org.springframework.batch.item.data.builder.MongoItemReaderBuilder;
 import org.springframework.batch.item.data.builder.MongoItemWriterBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
-import org.springframework.batch.item.database.HibernateCursorItemReader;
-import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.database.JpaCursorItemReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.lang.NonNull;
 import ru.korolkovrs.spring26.domain.jpa.AuthorJpa;
 import ru.korolkovrs.spring26.domain.mongo.AuthorMongo;
-import ru.korolkovrs.spring26.repository.AuthorRepository;
+import ru.korolkovrs.spring26.repository.AuthorJpaRepository;
 
-import java.util.function.Function;
+import java.util.List;
+import java.util.Map;
+
 
 @Configuration
-@EnableBatchProcessing
 @RequiredArgsConstructor
+@Slf4j
 public class JobConfig {
-    private final static int CHUNK_SIZE = 10;
+    private final static int CHUNK_SIZE = 2;
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    private final AuthorRepository authorRepository;
+    private final JobBuilderFactory jobBuilderFactory;
+
+    @Bean
+    public Job importAuthorJob(Step transformAuthorStep) {
+        return jobBuilderFactory.get("importAuthorJob")
+                .start(transformAuthorStep)
+                .listener(new JobExecutionListener() {
+                    @Override
+                    public void beforeJob(JobExecution jobExecution) {
+                        log.info("Начало работы с Author");
+                    }
+
+                    @Override
+                    public void afterJob(JobExecution jobExecution) {
+                        log.info("Конец работы с Author");
+                    }
+                })
+                .build();
+    }
 
     @Bean
     public Step transformAuthorStep(ItemReader<AuthorJpa> itemReader,
@@ -44,20 +63,73 @@ public class JobConfig {
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
+                .listener(new ItemReadListener<>() {
+                    @Override
+                    public void beforeRead() {
+                        log.info("Начало чтения AuthorJpa");
+                    }
+
+                    @Override
+                    public void afterRead(AuthorJpa authorJpa) {
+                        log.info("Конец чтения AuthorJpa");
+                    }
+
+                    @Override
+                    public void onReadError(Exception e) {
+                        log.info("Ошибка чтения AuthorJpa");
+                    }
+                })
+                .listener(new ItemProcessListener<AuthorJpa, AuthorMongo>() {
+                    @Override
+                    public void beforeProcess(AuthorJpa o) {
+                        log.info("Начало обработки AuthorJpa");
+                    }
+
+                    @Override
+                    public void afterProcess(AuthorJpa o, AuthorMongo o2) {
+                        log.info("Конец обработки AuthorJpa");
+                    }
+
+                    @Override
+                    public void onProcessError(AuthorJpa authorJpa, Exception e) {
+                        log.info("Конец обработки AuthorJpa");
+                    }
+                })
+                .listener(new ItemWriteListener<AuthorMongo>() {
+                    @Override
+                    public void beforeWrite(List<? extends AuthorMongo> list) {
+                        log.info("Начало записи AuthorMongo");
+                    }
+
+                    @Override
+                    public void afterWrite(List<? extends AuthorMongo> list) {
+                        log.info("Конец записи AuthorMongo");
+                    }
+
+                    @Override
+                    public void onWriteError(Exception e, List<? extends AuthorMongo> list) {
+                        log.info("Ошибка записи AuthorMongo");
+                    }
+                })
                 .build();
     }
 
     @Bean
-    public ItemReader<AuthorJpa> authorJpaItemReader() {
+    public ItemReader<AuthorJpa> authorJpaItemReader(AuthorJpaRepository authorRepository) {
         return new RepositoryItemReaderBuilder<AuthorJpa>()
+                .name("authorItemReader")
                 .repository(authorRepository)
                 .methodName("findAll")
+                .sorts(Map.of("id", Sort.Direction.ASC))
                 .build();
     }
 
     @Bean
     public ItemProcessor<AuthorJpa, AuthorMongo> authorItemProcessor() {
-        return AuthorMongo::new;
+        return authorJpa -> {
+            log.info(authorJpa.toString());
+            return new AuthorMongo(authorJpa);
+        };
     }
 
     @Bean
@@ -67,5 +139,4 @@ public class JobConfig {
                 .collection("author")
                 .build();
     }
-
 }
