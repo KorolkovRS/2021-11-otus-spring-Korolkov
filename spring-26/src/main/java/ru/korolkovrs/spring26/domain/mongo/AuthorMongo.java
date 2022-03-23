@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import ru.korolkovrs.spring26.domain.jpa.AuthorJpa;
 
 @Document("author")
 @NoArgsConstructor
@@ -13,6 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AuthorMongo {
 
     public AuthorMongo(String name) {
+        this.name = name;
+    }
+
+    public AuthorMongo(AuthorJpa authorJpa) {
         this.name = name;
     }
 
